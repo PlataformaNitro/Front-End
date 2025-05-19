@@ -1,6 +1,5 @@
-package com.example.arquivomobileoficialnitro.ui.theme
+package com.nitro.arquivomobileoficialnitro.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

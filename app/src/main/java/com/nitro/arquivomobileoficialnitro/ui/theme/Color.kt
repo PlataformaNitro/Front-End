@@ -1,4 +1,4 @@
-package com.example.arquivomobileoficialnitro.ui.theme
+package com.nitro.arquivomobileoficialnitro.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

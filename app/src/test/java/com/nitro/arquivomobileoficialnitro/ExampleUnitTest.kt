@@ -1,4 +1,4 @@
-package com.example.arquivomobileoficialnitro
+package com.nitro.arquivomobileoficialnitro
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.arquivomobileoficialnitro.ui.theme
+package com.nitro.arquivomobileoficialnitro.ui.theme
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -21,13 +21,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.arquivomobileoficialnitro.R
+import com.nitro.arquivomobileoficialnitro.R
 
 
 @Composable
+fun backgroundPrincipal() {
+    // Função para definir o background principal
+    Image(
+        painter = painterResource(id = R.drawable.img_background_claro_nitro),
+        contentDescription = null,
+        modifier = Modifier.fillMaxSize(),
+        contentScale = ContentScale.Crop
+    )
+}
+@Composable
+
 fun LoginScreen(paddingValues: PaddingValues) {
     Box(modifier = Modifier.fillMaxSize()) {
+
         // Background Principal
+        backgroundPrincipal()
         Image(
             painter = painterResource(id = R.drawable.img_background_claro_nitro),
             contentDescription = null,
@@ -61,7 +74,7 @@ fun LoginScreen(paddingValues: PaddingValues) {
     }
 }
 @Composable
-fun LoginHeader(){
+fun LoginHeader(loginOrSplash: Boolean = true) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -75,6 +88,7 @@ fun LoginHeader(){
                 .height(350.dp) // Tamanho da Logo
         )
         // Texto abaixo da logo
+        if( loginOrSplash){
         Text(
             text = "O Caminho Certo para quem vive sobre duas rodas!",
             fontSize = 25.sp, // Tamanho do texto
@@ -87,7 +101,7 @@ fun LoginHeader(){
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally) // Centraliza o texto
         )
-    }
+    }}
 
 }
 
@@ -110,5 +124,6 @@ fun LoginButton(){
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(paddingValues = PaddingValues(16.dp)) // Defina o padding desejado aqui
+    LoginScreen(
+        paddingValues = PaddingValues(16.dp)) // Defina o padding desejado aqui
 }
