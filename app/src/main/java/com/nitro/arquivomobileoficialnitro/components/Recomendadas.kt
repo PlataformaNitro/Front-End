@@ -1,3 +1,5 @@
+package com.nitro.arquivomobileoficialnitro.components
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,12 +17,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nitro.arquivomobileoficialnitro.R
-import com.nitro.arquivomobileoficialnitro.ui.theme.archivoBlack
+
 
 @Composable
 fun Recomendadas(modifier: Modifier = Modifier) {
@@ -42,7 +46,6 @@ fun Recomendadas(modifier: Modifier = Modifier) {
                 .alpha(0.3f),
             contentScale = ContentScale.Crop
         )
-        Logo()
         Column(
             modifier = Modifier
                 .align(Alignment.Center)
@@ -52,14 +55,13 @@ fun Recomendadas(modifier: Modifier = Modifier) {
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Normal,
                 color = Color.White,
-                fontFamily = archivoBlack,
-
+                fontFamily = FontFamily(Font(R.font.archivo_black)),
                 )
             Text(
                 text = "para você",
                 fontSize = 30.sp,
                 color = Color.White,
-                fontFamily = archivoBlack,
+                fontFamily = FontFamily(Font(R.font.archivo_black)),
                 modifier = Modifier.offset(x = 100.dp)
 
             )
