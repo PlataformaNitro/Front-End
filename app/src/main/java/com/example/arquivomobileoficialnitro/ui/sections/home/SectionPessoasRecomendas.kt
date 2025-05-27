@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -13,13 +14,21 @@ import com.example.arquivomobileoficialnitro.R
 
 @Composable
 fun SectionPessoasRecomendas(modifier: Modifier = Modifier) {
-    LazyRow(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.spacedBy(7.dp)){
-       item {
-           PessoasRecomendadas(R.drawable.foto_perfil_amigos_recomendados)
-           PessoasRecomendadas(R.drawable.amigos_recomendados_1)
-           PessoasRecomendadas(R.drawable.amigos_recomendados_2)
-           PessoasRecomendadas(R.drawable.amigos_recomendados_3)
-       }
+
+    val pessoas = listOf(
+        R.drawable.foto_perfil_amigos_recomendados,
+        R.drawable.amigos_recomendados_1,
+        R.drawable.amigos_recomendados_2,
+        R.drawable.amigos_recomendados_3
+    )
+
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(7.dp)
+    ) {
+        items(pessoas) { pessoa ->
+            PessoasRecomendadas(pessoa)
+        }
     }
 }
 
