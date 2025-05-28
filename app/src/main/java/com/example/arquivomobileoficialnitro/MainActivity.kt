@@ -2,23 +2,21 @@ package com.example.arquivomobileoficialnitro
 
 import LoginScreenController
 import SplashScreenController
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.arquivomobileoficialnitro.ui.screen.LoginScreen
 
-class MainActivity :AppCompatActivity(){
+class MainActivity :ComponentActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
         setContent {
             MaterialTheme {
                 val navController = rememberNavController()

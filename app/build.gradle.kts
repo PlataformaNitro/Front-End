@@ -48,10 +48,11 @@ dependencies {
     implementation(libs.androidx.compose.bom.v20230501)
     implementation(libs.ui)
     implementation (libs.androidx.navigation.compose)
-    implementation ("androidx.navigation:navigation-compose:2.9.0")
+    implementation (libs.navigation.compose)
     //noinspection GradleDependency
     implementation (libs.androidx.compose.material3.material3)
-    
+    implementation (libs.androidx.appcompat)
+    implementation (libs.material)
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)

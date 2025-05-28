@@ -27,7 +27,7 @@ fun LoginScreen() {
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            HeaderLogin(Modifier.padding(top = 48.dp))
+            HeaderLogin(Modifier.padding(top = 0.dp))
             SectionTodasAsOpcoesLogin(Modifier.padding(top = 14.dp))
         }
     }
