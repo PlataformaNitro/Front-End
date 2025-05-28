@@ -1,26 +1,40 @@
+package com.example.arquivomobileoficialnitro
+
+import LoginScreenController
+import SplashScreenController
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.arquivomobileoficialnitro.ui.components.util.SplashScreen
 import com.example.arquivomobileoficialnitro.ui.screen.LoginScreen
 
-class MainActivity : ComponentActivity() {
+class MainActivity :AppCompatActivity(){
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContent {
             MaterialTheme {
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "splash") {
-                    composable("splash") {
-                        SplashScreenController(navController = navController)
-                    }
-                    composable("login") {
-                        LoginScreenController(navController = navController)
+                Scaffold { innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = "splash",
+                        modifier = androidx.compose.ui.Modifier.padding(innerPadding)
+                    ) {
+                        composable("splash") {
+                            SplashScreenController(navController = navController)
+                        }
+                        composable("login") {
+                            LoginScreenController(navController = navController)
+                        }
                     }
                 }
             }
