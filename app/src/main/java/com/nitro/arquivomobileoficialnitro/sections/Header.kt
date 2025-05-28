@@ -3,6 +3,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.nitro.arquivomobileoficialnitro.R
+import com.nitro.arquivomobileoficialnitro.components.FotoPerfil
+import com.nitro.arquivomobileoficialnitro.components.TextoHeader
 
 @Composable
 fun Header(modifier: Modifier = Modifier) {

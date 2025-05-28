@@ -1,11 +1,8 @@
 package com.nitro.arquivomobileoficialnitro.components
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -13,20 +10,19 @@ import androidx.compose.ui.unit.dp
 import com.nitro.arquivomobileoficialnitro.R
 
 @Composable
-fun FotoPerfil(tamanho:Int,image:Int) {
-    Image(
-        painter = painterResource(id = image),
-        contentDescription = "Foto de perfil",
-        modifier = Modifier
-            .size(tamanho.dp)
-            .clip(CircleShape),
-        contentScale = ContentScale.Crop
-    )
+fun LogoHome(modifier: Modifier = Modifier) {
+        Image(
+            painter = painterResource(id = R.drawable.nitro_logo),
+            contentDescription = "Nitro Logo",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(40.dp)
+        )
+    }
 
-}
 
 @Preview
 @Composable
-private fun FotoPerfilPreview() {
-    FotoPerfil(74,R.drawable.foto_perfil)
+private fun LogoPreview() {
+    LogoHome()
 }

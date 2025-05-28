@@ -1,17 +1,18 @@
+package com.nitro.arquivomobileoficialnitro.components
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.nitro.arquivomobileoficialnitro.R
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nitro.arquivomobileoficialnitro.ui.theme.archivoBlack
 
 @Composable
 fun TextoHeader(modifier: Modifier = Modifier) {
@@ -22,13 +23,13 @@ fun TextoHeader(modifier: Modifier = Modifier) {
         Text(
             text = "Olá, David!",
             fontSize = 36.sp,
-            fontFamily = archivoBlack,
+            fontFamily = FontFamily(Font(R.font.archivo_black)),
             color = Color.White
         )
         Text(
             text = "faça sua jornada!",
             fontSize = 20.sp,
-            fontFamily = archivoBlack,
+            fontFamily = FontFamily(Font(R.font.archivo_black)),
             color = Color.Gray
         )
     }
