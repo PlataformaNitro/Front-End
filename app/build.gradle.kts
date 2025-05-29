@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.nitro.arquivomobileoficialnitro"
+    namespace = "com.example.arquivomobileoficialnitro"
     compileSdk = 35
 
     defaultConfig {
