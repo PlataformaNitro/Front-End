@@ -2,6 +2,7 @@ package com.example.arquivomobileoficialnitro.ui.sections.homeimport
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,15 +19,15 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CardHome(modifier: Modifier = Modifier,image:Int) {
     Box(modifier = Modifier
-        .width(271.dp)
-        .height(233.dp)
         .clip(RoundedCornerShape(25.dp))) {
         Image(
             painter = painterResource(id = image),
             contentDescription = "card de eventos",
             modifier = Modifier
-                .width(271.dp)
-                .height(233.dp),
+                .width(260.dp)
+                .height(300.dp)
+                .clip(RoundedCornerShape(16.dp))
+            ,
             contentScale = ContentScale.Crop
         )
     }

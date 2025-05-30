@@ -21,7 +21,7 @@ import com.example.arquivomobileoficialnitro.R
 @Composable
 fun LogoHome(modifier: Modifier = Modifier) {
         Image(
-            painter = painterResource(id = R.drawable.nitro_logo),
+            painter = painterResource(id = R.drawable.nitropnglogodark),
             contentDescription = "Nitro Logo",
             contentScale = ContentScale.Crop,
             modifier = Modifier

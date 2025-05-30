@@ -27,7 +27,7 @@ fun SectionPessoasRecomendas(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.spacedBy(7.dp)
     ) {
         items(pessoas) { pessoa ->
-            PessoasRecomendadas(pessoa)
+            PessoasRecomendadas(pessoa,"f")
         }
     }
 }

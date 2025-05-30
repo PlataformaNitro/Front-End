@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.arquivomobileoficialnitro"
-        minSdk = 21
+        minSdk = 25
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -40,7 +40,12 @@ android {
 }
 
 dependencies {
-
+    implementation (libs.androidx.material)
+    implementation (libs.androidx.compose.ui.ui.tooling.preview)
+    implementation (libs.androidx.lifecycle.runtime.ktx)
+    implementation (libs.androidx.activity.compose)
+    implementation (libs.material.icons.extended)
+    implementation ("androidx.compose.material:material:1.8.2")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -69,5 +74,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 // splash screen
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation(libs.androidx.core.splashscreen)
 }

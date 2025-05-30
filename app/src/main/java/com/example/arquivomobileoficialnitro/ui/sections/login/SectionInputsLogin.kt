@@ -8,12 +8,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SectionInputsLogin(modifier: Modifier = Modifier) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(24.dp)) {
-        CamposLogin(label = "usuario")
-        CamposLogin(label = "senha")
+    CampoLogin("usuario ou email",{},"")
+    CampoLogin("senha",{},"")
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun InputsLoginPreview() {
     SectionInputsLogin()
