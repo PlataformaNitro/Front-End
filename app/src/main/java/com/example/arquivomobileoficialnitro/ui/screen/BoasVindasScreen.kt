@@ -35,7 +35,7 @@ fun BoasVindasScreen(modifier: Modifier = Modifier, navController: NavController
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             HeaderBoasVindas(
-                Modifier.padding(bottom = 211.dp, start = 14.dp, end = 14.dp)
+                Modifier.padding(bottom = 211.dp, start = 45.dp, end = 45.dp)
             )
 
             BotaoDeEntrada(

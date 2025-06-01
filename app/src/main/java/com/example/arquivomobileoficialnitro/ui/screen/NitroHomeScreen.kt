@@ -1,13 +1,23 @@
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,10 +32,11 @@ import com.example.arquivomobileoficialnitro.ui.sections.home.SectionCardHome
 import com.example.arquivomobileoficialnitro.ui.sections.homeimport.Header
 import com.example.nitroapp.ui.components.SideDrawerMenu
 
-
 @Composable
-fun NitroHomeScreen(navController: NavController) {
+fun NitroHomeScreen(navController: NavController? = null) {
     var isDrawerOpen by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
+
     Box(Modifier.fillMaxSize()) {
         BackgroundSecundario()
 
@@ -33,6 +44,7 @@ fun NitroHomeScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
+                .verticalScroll(scrollState)
         ) {
             TopAppBar(
                 backgroundColor = Color.Transparent,
@@ -42,24 +54,18 @@ fun NitroHomeScreen(navController: NavController) {
             ) {
                 LogoDark(Modifier.size(60.dp))
                 Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = {
-                    isDrawerOpen = !isDrawerOpen
-                }) {
+                IconButton(onClick = { isDrawerOpen = !isDrawerOpen }) {
                     Icon(Icons.Filled.Menu, contentDescription = "Menu", tint = Color.White)
                 }
             }
 
             Header()
-
             Spacer(modifier = Modifier.height(16.dp))
-
             Text("17°C", color = Color.White, fontSize = 20.sp)
             Spacer(modifier = Modifier.height(16.dp))
             Search()
             Spacer(modifier = Modifier.height(16.dp))
-
             Recomendadas()
-
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
@@ -74,6 +80,7 @@ fun NitroHomeScreen(navController: NavController) {
             }
 
             LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(14.dp),
                 modifier = Modifier.padding(vertical = 8.dp)
             ) {
                 items(users) { user ->
@@ -82,8 +89,21 @@ fun NitroHomeScreen(navController: NavController) {
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
             SectionCardHome()
+            Spacer(modifier = Modifier.height(10.dp))
+            SectionCardHome()
+
+            // Espaço extra para o menu não cobrir conteúdo
+            Spacer(modifier = Modifier.height(100.dp))
+        }
+
+        // BottomMenu sobreposto ao conteúdo
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 16.dp)
+        ) {
+            BottomMenu()
         }
 
         if (isDrawerOpen) {
@@ -95,12 +115,7 @@ fun NitroHomeScreen(navController: NavController) {
             ) {
                 SideDrawerMenu(
                     onItemClick = {
-                        if (it == "close") {
-                            isDrawerOpen = false
-                        } else {
-                            // Ações para outros cliques de menu podem ser tratadas aqui
-                            isDrawerOpen = false
-                        }
+                        isDrawerOpen = false
                     },
                     modifier = Modifier.fillMaxSize()
                 )
@@ -109,8 +124,10 @@ fun NitroHomeScreen(navController: NavController) {
     }
 }
 
+
+
 @Preview
 @Composable
 private fun NitroHomeScreenPreview() {
-    //NitroHomeScreen()
+    NitroHomeScreen()
 }

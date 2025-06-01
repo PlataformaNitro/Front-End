@@ -2,7 +2,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -23,12 +25,14 @@ import com.example.arquivomobileoficialnitro.R
 @Composable
 fun EsqueciSenhaScreen(navController: NavController?=null) {
     var email by remember { mutableStateOf("") }
+    val scrollState = rememberScrollState()
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF001B3D)) // Fundo azul escuro
             .padding(24.dp)
+            .verticalScroll(scrollState)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

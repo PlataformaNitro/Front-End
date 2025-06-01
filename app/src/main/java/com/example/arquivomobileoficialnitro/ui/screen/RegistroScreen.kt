@@ -1,7 +1,9 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -34,11 +36,12 @@ fun RegisterScreen(navController: NavController?=null) {
     var repetirSenhaVisivel by remember { mutableStateOf(false) }
     var concordaTermos by remember { mutableStateOf(false) }
     var receberNovidades by remember { mutableStateOf(false) }
-
+    val scrollState = rememberScrollState()
     val backgroundColor = Color(0xFF00112A)
 
     Column(
         modifier = Modifier
+            .verticalScroll(scrollState) // Permite rolagem
             .fillMaxSize()
             .background(backgroundColor)
             .padding(horizontal = 24.dp, vertical = 16.dp),

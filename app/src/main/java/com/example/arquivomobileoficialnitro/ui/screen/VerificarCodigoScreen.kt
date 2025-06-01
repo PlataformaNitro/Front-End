@@ -1,7 +1,9 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,6 +28,7 @@ import kotlinx.coroutines.delay
 fun VerificarCodigoScreen(navController: NavController?=null) {
     val codigo = remember { mutableStateListOf("", "", "", "", "", "") }
     var tempo by remember { mutableStateOf(60) }
+    val scrollState = rememberScrollState()
 
     // Inicia contagem regressiva
     LaunchedEffect(Unit) {
@@ -43,7 +46,7 @@ fun VerificarCodigoScreen(navController: NavController?=null) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize().padding(24.dp)
+            modifier = Modifier.fillMaxSize().padding(24.dp).verticalScroll(scrollState)
         ) {
             LogoDark(Modifier.size(200.dp))
             // Imagem ilustrativa

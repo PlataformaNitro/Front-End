@@ -29,7 +29,7 @@ val archivoBlack = FontFamily(
 
 
 @Composable
-fun TextoBoasVindas(modifier: Modifier = Modifier,color:Color) {
+fun TextoBoasVindas(modifier: Modifier = Modifier,color:Color,textBoasVindas:String) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = "Bem vindo!",
@@ -45,7 +45,7 @@ fun TextoBoasVindas(modifier: Modifier = Modifier,color:Color) {
             textAlign = TextAlign.Center
         )
         Text(
-            text = "Nitro, sua ferramenta para viagens seguras e confortaveis sem qualquer tipo de preocupação",
+            text = textBoasVindas,
             color = Color(0xFF798797), // FF = 100% opaco
            modifier = modifier.fillMaxWidth(),
             fontFamily = archivoBlack,
@@ -54,7 +54,7 @@ fun TextoBoasVindas(modifier: Modifier = Modifier,color:Color) {
             lineHeight = 15.sp,
             letterSpacing = 0.sp,
             textAlign = TextAlign.Center,
-            maxLines = 2,
+            maxLines = 3,
             overflow = TextOverflow.Ellipsis
         )
     }
@@ -63,5 +63,5 @@ fun TextoBoasVindas(modifier: Modifier = Modifier,color:Color) {
 @Preview(showBackground = true)
 @Composable
 fun TextoBoasVindasPreview() {
-    TextoBoasVindas(color = Color.Black)
+    TextoBoasVindas(color = Color.Black, textBoasVindas = "Nitro, sua ferramenta para viagens seguras e confortáveis sem qualquer tipo de preocupação")
 }
