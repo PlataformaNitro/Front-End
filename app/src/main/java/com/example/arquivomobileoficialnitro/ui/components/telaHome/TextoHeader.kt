@@ -15,20 +15,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TextoHeader(modifier: Modifier = Modifier) {
+fun TextoHeader(modifier: Modifier = Modifier, tamanhoFontTitulo: Int,tamanhoFontDescricao:Int) {
     Column(
         modifier = Modifier.padding(start = 10.dp),
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         Text(
             text = "Olá, David!",
-            fontSize = 36.sp,
+            fontSize = tamanhoFontTitulo.sp,
             fontFamily = FontFamily(Font(R.font.archivo_black)),
             color = Color.White
         )
         Text(
             text = "faça sua jornada!",
-            fontSize = 20.sp,
+            fontSize = tamanhoFontDescricao.sp,
             fontFamily = FontFamily(Font(R.font.archivo_black)),
             color = Color.Gray
         )
@@ -38,5 +38,5 @@ fun TextoHeader(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun TextoHeaderPreview() {
-    TextoHeader()
+    TextoHeader(tamanhoFontTitulo = 36, tamanhoFontDescricao = 20)
 }

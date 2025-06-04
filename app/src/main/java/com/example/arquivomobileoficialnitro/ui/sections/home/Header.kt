@@ -11,8 +11,8 @@ import com.example.arquivomobileoficialnitro.R
 @Composable
 fun Header(modifier: Modifier = Modifier) {
     Row{
-        FotoPerfil(74, R.drawable.foto_perfil)
-        TextoHeader()
+        FotoPerfil(74, R.drawable.foto_perfil,modifier)
+        TextoHeader(tamanhoFontTitulo = 36, tamanhoFontDescricao = 20)
     }
 }
 

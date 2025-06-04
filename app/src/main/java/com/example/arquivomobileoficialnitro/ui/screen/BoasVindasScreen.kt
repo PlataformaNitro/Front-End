@@ -1,7 +1,9 @@
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,20 +22,8 @@ import com.example.arquivomobileoficialnitro.ui.components.util.BackgroundSecund
 @Composable
 fun BoasVindasScreen(modifier: Modifier = Modifier, navController: NavController? = null) {
     Box {
-        BackgroundSecundario()
-
-        // Apenas uma imagem (remova as duplicadas se não forem necessárias)
-        Image(
-            painter = painterResource(id = R.drawable.image_16_1_),
-            contentDescription = null,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .alpha(0.8f),
-            contentScale = ContentScale.FillWidth
-        )
-
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        TesteScreen()
+        Column(modifier.padding(bottom = 84.dp).offset(y= 250.dp),horizontalAlignment = Alignment.CenterHorizontally) {
             HeaderBoasVindas(
                 Modifier.padding(bottom = 211.dp, start = 45.dp, end = 45.dp)
             )

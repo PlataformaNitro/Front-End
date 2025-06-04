@@ -13,11 +13,11 @@ import androidx.compose.ui.unit.dp
 import com.example.arquivomobileoficialnitro.R
 
 @Composable
-fun FotoPerfil(tamanho:Int,image:Int) {
+fun FotoPerfil(tamanho:Int,image:Int,modifier: Modifier) {
     Image(
         painter = painterResource(id = image),
         contentDescription = "Foto de perfil",
-        modifier = Modifier
+        modifier = modifier
             .size(tamanho.dp)
             .clip(CircleShape),
         contentScale = ContentScale.Crop
@@ -28,5 +28,5 @@ fun FotoPerfil(tamanho:Int,image:Int) {
 @Preview
 @Composable
 private fun FotoPerfilPreview() {
-    FotoPerfil(74,R.drawable.foto_perfil)
+    FotoPerfil(74,R.drawable.foto_perfil, Modifier)
 }

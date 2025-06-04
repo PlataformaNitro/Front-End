@@ -84,7 +84,7 @@ fun NitroHomeScreen(navController: NavController? = null) {
                 modifier = Modifier.padding(vertical = 8.dp)
             ) {
                 items(users) { user ->
-                    PessoasRecomendadas(R.drawable.amigos_recomendados_1, user)
+                    PessoasRecomendadas(R.drawable.amigos_recomendados_1, user, Modifier)
                 }
             }
 

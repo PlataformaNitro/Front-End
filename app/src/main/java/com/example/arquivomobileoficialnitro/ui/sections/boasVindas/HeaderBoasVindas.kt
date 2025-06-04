@@ -31,8 +31,6 @@ fun HeaderBoasVindas(modifier: Modifier = Modifier) {
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LogoDark(Modifier.size(334.dp))
-
         TextoBoasVindas(
             color = Color.White,
             textBoasVindas = listFrasesBoasVindas[currentIndex]

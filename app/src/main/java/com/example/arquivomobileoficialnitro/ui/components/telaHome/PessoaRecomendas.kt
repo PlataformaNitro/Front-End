@@ -16,9 +16,9 @@ import androidx.compose.ui.unit.dp
 import com.example.arquivomobileoficialnitro.R
 
 @Composable
-fun PessoasRecomendadas(image: Int,nome: String) {
+fun PessoasRecomendadas(image: Int,nome: String,modifier: Modifier) {
     Column(Modifier.width(100.dp)) {
-        FotoPerfil(100, image)
+        FotoPerfil(100, image, modifier)
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = "Diego",
@@ -32,5 +32,5 @@ fun PessoasRecomendadas(image: Int,nome: String) {
 @Preview
 @Composable
 private fun PessoasRecomendadasPreview() {
-    PessoasRecomendadas(R.drawable.foto_perfil_amigos_recomendados,"diego")
+    PessoasRecomendadas(R.drawable.foto_perfil_amigos_recomendados,"diego", Modifier)
 }
