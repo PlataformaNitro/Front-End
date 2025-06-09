@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.LocationOn
@@ -22,11 +23,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -46,18 +52,42 @@ fun PreviewMecanicoScreen() {
 
 @Composable
 fun MecanicoScreen(paddingValues: PaddingValues = PaddingValues(0.dp), modifier: Modifier = Modifier) {
-    val textos = listOf(
-        "Uma \nambulância ","Uma \nautoridade policial ","Um \ncaminhão de bombeiro "
+    val iconesTiposDeMecanico = listOf(
+        R.drawable.icone_de_localproximo,R.drawable.icone_de_especialidade, R.drawable.icone_de_popularidade
     )
-    var finalDoTexto = listOf("será \nchamada", "está \nsendo chamada", "está \nsendo chamado", "será \nchamado")
     var apontadorTexto by rememberSaveable { mutableIntStateOf(0) }
     var apontadorFinalDoTexto by rememberSaveable { mutableIntStateOf(0) }
-    val corDesativado = Color(0xFF001F54) // Azul escuro
-    val corAtivado = Color.White
     var botoesVisiveis by rememberSaveable() {  mutableStateOf(true) }
-    var tempoRestanteSegundos = 30
+    var tempoRestanteSegundos = 20
     var textotemporizador by rememberSaveable { mutableStateOf("0:30") }
+    var a by rememberSaveable { mutableIntStateOf(0) }
+    var b by rememberSaveable { mutableIntStateOf(0) }
+    var c by rememberSaveable { mutableIntStateOf(0) }
+    var d by rememberSaveable { mutableIntStateOf(0) }
+    var mecanicoPrincipal by rememberSaveable { mutableStateOf("MotoPro") }
 
+    var listaMecanicoPopular = listOf(
+        "MotoPOP" to "4.2km",
+        "MotoPOP2" to "4.2km",
+        "MotoPOP3" to "4.2km"
+    )
+    var listaMecanicoProximo = listOf(
+        "MotoFree" to "4.2km",
+        "MotoFree2" to "4.2km",
+        "MotoFree3" to "4.2km"
+    )
+    var listaMecanicoespecialista = listOf(
+        "MotoEspec" to "4.2km",
+        "MotoEspec2" to "4.2km",
+        "MotoEspec3" to "4.2km"
+    )
+    var visibleA by rememberSaveable { mutableStateOf(true) }
+    var visibleB by rememberSaveable { mutableStateOf(true) }
+    var visibleC by rememberSaveable { mutableStateOf(true) }
+    var visibleAlternative by rememberSaveable { mutableStateOf(false) }
+
+    var listadasListasDeMecanico = listOf(listaMecanicoProximo, listaMecanicoespecialista, listaMecanicoPopular)
+    var listaDevarieveisModificaveis = mutableListOf(visibleA, visibleB, visibleC, visibleAlternative)
     LaunchedEffect(Unit) {
 
         while (tempoRestanteSegundos > 0) {
@@ -91,7 +121,7 @@ fun MecanicoScreen(paddingValues: PaddingValues = PaddingValues(0.dp), modifier:
             fontFamily = FontFamily(Font(R.font.archivo_black)),
             fontSize = 32.sp,
             fontWeight = FontWeight(400),
-            modifier = Modifier.padding(vertical = 39.dp),
+            modifier = Modifier.padding(top = 39.dp),
 
             )
 
@@ -100,19 +130,32 @@ fun MecanicoScreen(paddingValues: PaddingValues = PaddingValues(0.dp), modifier:
             contentDescription = "Ícone de Alerta",
             modifier = Modifier.size(100.dp)
         )
+        Spacer(Modifier.height(30.dp))
+        Column (horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = "Vamos entrar em contato com a " + "MotoPro",
+            text = "Vamos entrar em contato com a " + mecanicoPrincipal,
             fontSize = 24.sp,
             fontFamily = FontFamily(Font(R.font.archivo_black)),
             fontWeight = FontWeight(400),
-            modifier = Modifier.padding(top = 26.dp)
+            modifier = Modifier
                 .width(241.dp)
-                .height(104.dp)
             ,
             color = Color(0xFFFFFFFF),
 
             textAlign = TextAlign.Center,
         )
+        if(!botoesVisiveis){
+            Text(
+                text = "(**) *****-****",
+                    fontSize = 24.sp,
+                    fontFamily = FontFamily(Font(R.font.archivo)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 20.dp)
+
+            )
+        }}
 
         Spacer(Modifier.height(100.dp))
         if(botoesVisiveis){
@@ -130,30 +173,63 @@ fun MecanicoScreen(paddingValues: PaddingValues = PaddingValues(0.dp), modifier:
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.padding(horizontal = 14.dp)
             ) {
-                Button(
-                    onClick = { apontadorTexto = 0;apontadorFinalDoTexto = 0 },
-                    shape = RoundedCornerShape(10.dp), // Ajuste o raio para o arredondamento desejado
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (apontadorTexto != 0) corDesativado else Color.White // Um azul escuro, ajuste conforme necessário
-                    ),
-                    modifier = Modifier.height(56.dp)
-                        .shadow(elevation = 4.dp),
-                    contentPadding = PaddingValues(
-                        horizontal = 11.dp,
-                        vertical = 12.dp
-                    ),
-
-                    ) {
-                    Text(
-                        "Médico", color = if(apontadorTexto != 0) Color.White else Color.Black,
-
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight(400),
-                        fontFamily = FontFamily(Font(R.font.archivo_black))
-
+                if(visibleA) {
+                    MotoFreeBanner(
+                        nomeDoMecanico = listaMecanicoProximo[a],
+                        icon = iconesTiposDeMecanico[0], aoApertar = {
+                            visibleAlternative = !visibleAlternative
+                            visibleB = !visibleB
+                            visibleC = !visibleC
+                            d = 0
+                        }, aoApertarNaArea = {mecanicoPrincipal = listaMecanicoProximo[a].first}
                     )
                 }
-                MotoFreeBanner()
+                if(visibleB) {
+                    MotoFreeBanner(
+                        nomeDoMecanico = listaMecanicoespecialista[b],
+                        icon = iconesTiposDeMecanico[1], aoApertar = {
+                            visibleAlternative = !visibleAlternative
+                            visibleA = !visibleA
+                            visibleC = !visibleC
+                            d = 1
+                        }, aoApertarNaArea = {mecanicoPrincipal = listaMecanicoespecialista[b].first}
+                    )
+                }
+
+if(visibleC) {
+                    MotoFreeBanner(
+                        nomeDoMecanico = listaMecanicoPopular[c],
+                        icon = iconesTiposDeMecanico[2], aoApertar = {
+                            visibleAlternative = !visibleAlternative
+                            visibleA = !visibleA
+                            visibleB = !visibleB
+                            d=2
+                        }, aoApertarNaArea = {mecanicoPrincipal = listaMecanicoPopular[c].first}
+                    )
+                }
+                if(visibleAlternative){
+                    MotoFreeBanner(
+                        nomeDoMecanico = listadasListasDeMecanico[d][1],
+                        icon = iconesTiposDeMecanico[d], expanderView = false, aoApertar = {
+                            visibleAlternative = !visibleAlternative
+                            visibleA = true
+                            visibleB = true
+                            visibleC = true
+                        },
+                 aoApertarNaArea = {mecanicoPrincipal = listadasListasDeMecanico[d][1].first}
+
+                    )
+                    MotoFreeBanner(
+                        nomeDoMecanico = listadasListasDeMecanico[d][2],
+                        icon = iconesTiposDeMecanico[d], expanderView = false, aoApertar = {
+                            visibleAlternative = !visibleAlternative
+                            visibleA = true
+                            visibleB = true
+                            visibleC = true
+                        },
+                        aoApertarNaArea = {mecanicoPrincipal = listadasListasDeMecanico[d][2].first}
+                    )
+                }
             }
 
 
@@ -171,39 +247,53 @@ fun MecanicoScreen(paddingValues: PaddingValues = PaddingValues(0.dp), modifier:
                     fontWeight = FontWeight(400),)
             }
 
-        }else(
-                Spacer(Modifier.height(200.dp))
+        }else {
+            Spacer(Modifier.height(100.dp))
+            Button(
+                onClick = { apontadorTexto = 2; apontadorFinalDoTexto = 4 },
+                colors = ButtonDefaults.buttonColors(Color.Black),
+                modifier = Modifier.padding(vertical = 3.dp),
+                contentPadding = PaddingValues(vertical = 15.dp, horizontal=14.dp)
+            ) {
+                Text(
+                    "Cancelar", color = Color.White,
+                    fontSize = 28.sp,
+                    fontFamily = FontFamily(Font(R.font.archivo_black)),
+                    fontWeight = FontWeight(400),
                 )
+            }
+        }
     }
 }
 
 @Composable
-fun MotoFreeBanner() {
+fun MotoFreeBanner(nomeDoMecanico: Pair<String,String> = "MotoFree" to "2km", modifier: Modifier = Modifier, icon:Int, aoApertar: () -> Unit= {},aoApertarNaArea: () -> Unit = {}, expanderView : Boolean = true) {
+    var rotate by rememberSaveable() { mutableFloatStateOf(0f) }
     Surface(
         modifier = Modifier
-            .fillMaxWidth(),
+            .width(252.dp)
+            .height(36.dp)
+            .clickable { aoApertarNaArea(); if(!expanderView || rotate == 90f) aoApertar() },
         shadowElevation = 4.dp, // Adiciona uma sombra para dar destaque
         shape = RoundedCornerShape(12.dp),
-        color = Color(0xFFEAEAEA) // Um cinza claro similar ao da imagem
+        color = Color(0xFFD9D9D9)
     ) {
+
         Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically // Alinha todos os itens ao centro verticalmente
         ) {
             // Ícone de localização
             Icon(
-                imageVector = Icons.Default.LocationOn,
-                contentDescription = "Ícone de Localização"
+                painter = painterResource(icon), // Use o ícone de localização
+                contentDescription = "Ícone de Localização",
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
 
-            Spacer(modifier = Modifier.width(8.dp))
 
             // Texto principal
             Text(
-                text = "MotoFree",
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.bodyLarge
+                text = nomeDoMecanico.first,
+                fontFamily = FontFamily(Font(R.font.archivo_black)),
             )
 
             // Spacer com peso para empurrar o resto para a direita
@@ -211,18 +301,32 @@ fun MotoFreeBanner() {
 
             // Texto da distância
             Text(
-                text = "2km",
+                text = nomeDoMecanico.second,
                 color = Color.Gray,
                 style = MaterialTheme.typography.bodyMedium
             )
 
             // Ícone de seta
+            if(expanderView){
+            IconButton(onClick = {
+                if(rotate == 0f) {
+                    rotate = 90f
+                } else {
+                    rotate = 0f
+                }
+                aoApertar()
+
+            }) {
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                painter = painterResource(R.drawable.icone_de_setasosmecanico),
                 contentDescription = "Ver detalhes",
-                tint = Color.Black
-            )
-        }
+                tint = Color.Black,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .rotate(rotate)
+            )}
+        }else{
+          Spacer(Modifier.width(46.dp))  }}
     }
 }
 
@@ -231,6 +335,5 @@ fun MotoFreeBanner() {
 fun MotoFreeBannerPreview() {
     // Adicionamos um padding no preview para ver melhor o componente
     Box(modifier = Modifier.padding(16.dp)) {
-        MotoFreeBanner()
     }
 }
