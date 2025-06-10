@@ -76,7 +76,7 @@ fun NitroHomeScreen(navController: NavController? = null) {
             )
 
             val users = remember {
-                listOf("Diego Messias", "Rodrigo Jesus", "Ruan Duarte", "Alexias Alberiz")
+                listOf("Diego Messias", "Rodrigo Jesus", "Ruan Duarte", "Alexia Alberiz")
             }
 
             LazyRow(

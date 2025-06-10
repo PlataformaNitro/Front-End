@@ -18,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.arquivomobileoficialnitro.ui.components.util.SplashScreen
+import com.example.arquivomobileoficialnitro.ui.screen.ScreenMaps
 
 class MainActivity : ComponentActivity(){
 
@@ -53,6 +54,9 @@ class MainActivity : ComponentActivity(){
                         }
                         composable ("homePage"){
                             NitroHomeScreen(navController = navController)
+                        }
+                        composable("mapa") {
+                            ScreenMaps()
                         }
                     }
                 }

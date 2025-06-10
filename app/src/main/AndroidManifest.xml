@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyChW5MlFYzO_vcMKs-LR6z6PVaibIlF5uY" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -24,6 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.screen.MapActivity2" android:exported="true"
+            tools:ignore="MissingClass" />
+
     </application>
 
 </manifest>
