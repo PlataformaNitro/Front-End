@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,15 +48,19 @@ fun FormularioScreen(modifier: Modifier = Modifier) {
             onValueChange = { novoTexto -> texto = novoTexto },
             modifier = modifier.padding(vertical = 32.dp, horizontal = 16.dp),
             label = { Text("Nome do evento") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next,
+                capitalization = KeyboardCapitalization.Words
+            ),
 
-        )
+            )
         Button(modifier = modifier.padding(horizontal = 16.dp), onClick = {
             if (texto.isNotBlank()) {
                 val eventoObject = Evento(texto)
                 Log.i("FormularioScreen", "Evento criado: $eventoObject")
-            }else{
-                Log.i("FormularioScreen","Texto vazio")
+            } else {
+                Log.i("FormularioScreen", "Texto vazio")
             }
         }
         ) { Text("Salvar") }
