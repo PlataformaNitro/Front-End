@@ -1,0 +1,69 @@
+package com.orgs.myapplication.Activitys
+
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.orgs.myapplication.Model.Evento
+import com.orgs.myapplication.ui.theme.MyApplicationTheme
+
+class FormularioEventoActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            MyApplicationTheme {
+                FormularioScreen()
+            }
+        }
+    }
+}
+
+@Composable
+fun FormularioScreen(modifier: Modifier = Modifier) {
+    var texto by remember { mutableStateOf("") }
+    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+        TextField(
+            value = texto,
+            onValueChange = { novoTexto -> texto = novoTexto },
+            modifier = modifier.padding(vertical = 32.dp, horizontal = 16.dp),
+            label = { Text("Nome do evento") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+
+        )
+        Button(modifier = modifier.padding(horizontal = 16.dp), onClick = {
+            if (texto.isNotBlank()) {
+                val eventoObject = Evento(texto)
+                Log.i("FormularioScreen", "Evento criado: $eventoObject")
+            }else{
+                Log.i("FormularioScreen","Texto vazio")
+            }
+        }
+        ) { Text("Salvar") }
+    }
+}
+
+@Preview
+@Composable
+private fun FormularioScreenPreview() {
+    FormularioScreen()
+}
