@@ -1,5 +1,6 @@
 package com.orgs.myapplication.Activitys
 
+import EventDao
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -28,19 +29,24 @@ import com.orgs.myapplication.Model.Evento
 import com.orgs.myapplication.ui.theme.MyApplicationTheme
 
 class FormularioEventoActivity : ComponentActivity() {
+    private val dao = EventDao()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                FormularioScreen()
+                FormularioScreen(onSaveClick = {
+                    evento ->  dao.save(evento)
+                    finish()
+                }
+                )
             }
         }
     }
 }
 
 @Composable
-fun FormularioScreen(modifier: Modifier = Modifier) {
+fun FormularioScreen(modifier: Modifier = Modifier, onSaveClick:(Evento) -> Unit = {}) {
     var texto by remember { mutableStateOf("") }
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         TextField(
@@ -59,6 +65,7 @@ fun FormularioScreen(modifier: Modifier = Modifier) {
             if (texto.isNotBlank()) {
                 val eventoObject = Evento(texto)
                 Log.i("FormularioScreen", "Evento criado: $eventoObject")
+                onSaveClick(eventoObject)
             } else {
                 Log.i("FormularioScreen", "Texto vazio")
             }
