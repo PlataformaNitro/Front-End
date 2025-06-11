@@ -49,6 +49,18 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Preview
+    @Composable
+    private fun AppPreview() {
+       App {
+            EventoScreen(sections = mapOf(
+                "todos os eventos" to dao.eventos(),
+                "Próximos Eventos" to sampleEvents,
+                "Por Proximidade" to sampleEventsProximos
+            ))
+        }
+    }
+
     @Composable
     fun App(onFabClick: () -> Unit = {}, Content: @Composable () -> Unit = {}) {
         Surface {
@@ -66,4 +78,5 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 

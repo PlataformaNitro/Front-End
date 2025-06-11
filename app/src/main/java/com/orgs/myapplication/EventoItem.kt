@@ -6,7 +6,7 @@ import com.orgs.myapplication.Model.Evento
 
 @Composable
 fun EventoItem(modifier: Modifier = Modifier,evento:Evento) {
-    Text(evento.titulo)
+    Text(modifier = modifier, text = evento.titulo)
 }
 
 @Preview

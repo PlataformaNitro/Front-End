@@ -15,7 +15,7 @@ import com.orgs.myapplication.Model.Evento
 @Composable
 fun EventoSection(title: String = "Próximos Eventos", modifier: Modifier = Modifier, listaDeEventos: List<Evento>) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = modifier) {
-        Text(text = title, modifier = modifier.padding(8.dp), color = Color.Green)
+        Text(text = title, modifier = modifier.padding(horizontal = 16.dp), color = Color.Green)
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(horizontal = 16.dp)
