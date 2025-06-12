@@ -299,18 +299,19 @@ Button(onClick = {}, shape = RoundedCornerShape(10.dp), colors = ButtonDefaults.
     Box(modifier = Modifier.align(Alignment.CenterHorizontally)){
         Box(Modifier.align(Alignment.Center)
             .fillMaxWidth(0.95f)
-            .height(440.dp)
+            .wrapContentHeight()
         ){
             Surface(    modifier = Modifier
+                .matchParentSize()
                 .align(Alignment.Center)
                 .alpha(0.55f)
-                .fillMaxSize(),
+                ,
                 color = Color(0xFF2C486B),
                 shape = RoundedCornerShape(size = 25.dp),
                 shadowElevation = 8.dp
 
                 ){}
-            Column(verticalArrangement = Arrangement.spacedBy(15.dp), horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize() .padding(horizontal = 10.dp, vertical = 15.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(15.dp), horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth() .wrapContentHeight() .padding(horizontal = 10.dp, vertical = 15.dp)) {
                 Text(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     text = "Galeria de Fotos",
@@ -330,7 +331,6 @@ Button(onClick = {}, shape = RoundedCornerShape(10.dp), colors = ButtonDefaults.
                              shape =    RoundedCornerShape(12.dp)
                     ) {
                         Image(
-                            modifier = Modifier.fillMaxSize(),
                             painter = painterResource(id = R.drawable.imagem_galeria2),
                             contentDescription = "image description",
                             contentScale = ContentScale.Crop // imagens bugadas para consertar
@@ -339,16 +339,31 @@ Button(onClick = {}, shape = RoundedCornerShape(10.dp), colors = ButtonDefaults.
                     Surface(
                         modifier = Modifier
                             .size(width = 192.dp, height = 168.dp)
-                            .clip(RoundedCornerShape(12.dp))
-                            .shadow(5.dp)
+                            .shadow(5.dp),
+                        shape = RoundedCornerShape(12.dp)
+
                     ) {
+                        val painter = painterResource(id = R.drawable.unsplash_crqe6xl_4pe)
+
+                        val larguraImagem = painter.intrinsicSize.width
+                        val alturaImagem = painter.intrinsicSize.height
+
+                        // Calculando as escalas necessárias para preencher o contêiner
+                        val escalaX = (192 / larguraImagem) + 1f
+                        val escalaY = (168 / alturaImagem) + 1f
+                        var escala = maxOf(escalaX, escalaY)
                         Image(
-                            modifier = Modifier.fillMaxSize(),
                             painter = painterResource(id = R.drawable.unsplash_crqe6xl_4pe),
                             contentDescription = "image description",
-                            contentScale = ContentScale.FillBounds
-                        )
-                    }
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.width(400.dp) .height(400.dp)
+                             .graphicsLayer {
+                                scaleX = escalaX  // Ajuste conforme necessário
+                                scaleY = escalaY // Ajuste conforme necessário
+                            },
+                            alignment = Alignment.Center,
+
+                        )}
 
 
                 }
