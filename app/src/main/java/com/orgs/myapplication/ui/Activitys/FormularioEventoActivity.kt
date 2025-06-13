@@ -1,6 +1,7 @@
-package com.orgs.myapplication.Activitys
+package com.orgs.myapplication.ui.Activitys
 
 import EventDao
+import FormularioScreen
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -45,37 +46,3 @@ class FormularioEventoActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun FormularioScreen(modifier: Modifier = Modifier, onSaveClick:(Evento) -> Unit = {}) {
-    var texto by remember { mutableStateOf("") }
-    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
-        TextField(
-            value = texto,
-            onValueChange = { novoTexto -> texto = novoTexto },
-            modifier = modifier.padding(vertical = 32.dp, horizontal = 16.dp),
-            label = { Text("Nome do evento") },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next,
-                capitalization = KeyboardCapitalization.Words
-            ),
-
-            )
-        Button(modifier = modifier.padding(horizontal = 16.dp), onClick = {
-            if (texto.isNotBlank()) {
-                val eventoObject = Evento(texto)
-                Log.i("FormularioScreen", "Evento criado: $eventoObject")
-                onSaveClick(eventoObject)
-            } else {
-                Log.i("FormularioScreen", "Texto vazio")
-            }
-        }
-        ) { Text("Salvar") }
-    }
-}
-
-@Preview
-@Composable
-private fun FormularioScreenPreview() {
-    FormularioScreen()
-}

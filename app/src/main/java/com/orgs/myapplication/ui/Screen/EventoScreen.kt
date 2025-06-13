@@ -1,12 +1,9 @@
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.orgs.myapplication.Model.Evento
+import kotlin.collections.iterator
 import kotlin.collections.mapOf
 
 class EventoScreenUiState(
@@ -79,14 +77,7 @@ fun EventoScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
-        OutlinedTextField(
-            value = text,
-            onValueChange = state.onSearchChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            label = { Text("Nome do evento") }
-        )
+        SearchText(text = text, state = state)
         Spacer(Modifier)
         if (state.isShowSections()) {
             for (section in sections) {
@@ -110,5 +101,5 @@ private fun EventoScreenPreview() {
 @Preview
 @Composable
 private fun EventoScreenPreviewComTextoPesquisado() {
-    EventoScreen(state = EventoScreenUiState(searchText = "e", sections = sampleSection))
+    EventoScreen(state = EventoScreenUiState(searchText = "ev", sections = sampleSection))
 }

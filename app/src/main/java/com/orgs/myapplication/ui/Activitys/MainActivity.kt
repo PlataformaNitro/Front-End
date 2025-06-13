@@ -1,4 +1,4 @@
-package com.orgs.myapplication.Activitys
+package com.orgs.myapplication.ui.Activitys
 
 import EventDao
 import EventoScreen
@@ -17,16 +17,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.orgs.myapplication.Model.Evento
 import com.orgs.myapplication.ui.theme.MyApplicationTheme
-import sampleEvents
-import sampleEventsProximos
 import sampleSection
 
 class MainActivity : ComponentActivity() {

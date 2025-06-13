@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".Activitys.MainActivity"
+            android:name=".ui.Activitys.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MyApplication">
@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activitys.FormularioEventoActivity" />
+        <activity android:name=".ui.Activitys.FormularioEventoActivity" />
     </application>
 
 </manifest>
