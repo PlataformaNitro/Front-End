@@ -17,42 +17,9 @@ import com.orgs.myapplication.Model.Evento
 import kotlin.collections.iterator
 import kotlin.collections.mapOf
 
-class EventoScreenUiState(
-    val searchText: String = "",
-    val sections: Map<String, List<Evento>> = emptyMap(),
-    val eventosProucurados: List<Evento> = emptyList(),
-    val onSearchChange: (String) -> Unit = {}
-) {
-    fun isShowSections(): Boolean {
-        return searchText.isBlank()
-    }
-
-}
 
 @Composable
-fun EventoScreen(viewModel: EventosScreenViewModel,eventos: List<Evento>) {
-    val sections = mapOf(
-        "todos os eventos" to eventos,
-        "Próximos Eventos" to sampleEvents,
-        "Por Proximidade" to sampleEventsProximos
-    )
-
-    var text by rememberSaveable() {
-        mutableStateOf("")
-    }
-
-    fun containsTitulo(): (Evento) -> Boolean = { evento ->
-        evento.titulo.contains(text, ignoreCase = true) || evento.descricao.contains(text, ignoreCase = true)
-    }
-
-    val eventosProucurados = remember(eventos, text) {
-        if (text.isNotBlank()) {
-            sampleEvents.filter(containsTitulo()) + eventos.filter(containsTitulo())
-        } else {
-            emptyList()
-        }
-    }
-
+fun EventoScreen(viewModel: EventosScreenViewModel,) {
     val state = viewModel.uiState
     EventoScreen(state = state)
 }

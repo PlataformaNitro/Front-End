@@ -25,7 +25,7 @@ import com.orgs.myapplication.ui.theme.MyApplicationTheme
 import sampleSection
 
 class MainActivity : ComponentActivity() {
-    private val dao = EventDao()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,9 +39,8 @@ class MainActivity : ComponentActivity() {
                         )
                     )
                 }, Content = {
-                    val eventos = dao.eventos()
                     val viewModel by viewModels<EventosScreenViewModel>()
-                    EventoScreen(viewModel = viewModel,eventos = eventos)
+                    EventoScreen(viewModel = viewModel)
                 }
                 )
             }
