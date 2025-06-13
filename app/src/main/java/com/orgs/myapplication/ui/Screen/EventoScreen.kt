@@ -41,7 +41,7 @@ fun EventoScreen(eventos: List<Evento>) {
     }
 
     fun containsTitulo(): (Evento) -> Boolean = { evento ->
-        evento.titulo.contains(text, ignoreCase = true)
+        evento.titulo.contains(text, ignoreCase = true) || evento.descricao.contains(text, ignoreCase = true)
     }
 
     val eventosProucurados = remember(eventos, text) {
@@ -85,7 +85,7 @@ fun EventoScreen(
             }
         } else {
             for (evento in eventosProucurados) {
-                EventoItem(modifier = Modifier.padding(start = 16.dp), evento = evento)
+                CardItemEvento(modifier = Modifier.padding(start = 16.dp), evento = evento)
             }
         }
         Spacer(Modifier)

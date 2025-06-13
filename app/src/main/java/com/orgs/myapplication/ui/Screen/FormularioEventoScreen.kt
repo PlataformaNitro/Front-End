@@ -20,13 +20,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.orgs.myapplication.Model.Evento
 
+class FormularioScreenUiState
+    (val texto: String = "",
+     val descricao: String = "",
+     val onTextChange: (String) -> Unit = {},
+     val onDescricaoChange: (String) -> Unit = {}
+    )
+
 @Composable
-fun FormularioScreen(modifier: Modifier = Modifier, onSaveClick:(Evento) -> Unit = {}) {
+fun FormularioScreen(onSalveClick: (Evento) -> Unit = {}) {
     var texto by remember { mutableStateOf("") }
+    var descricao by remember { mutableStateOf("") }
+    val state = FormularioScreenUiState(texto = texto, onTextChange = { texto = it}, descricao = descricao, onDescricaoChange = {descricao = it})
+    val onSaveClick = {
+        if (texto.isNotBlank() && descricao.isNotBlank()) {
+            val eventoObject = Evento(texto)
+            onSalveClick(eventoObject)
+        }else{
+            var mostrarError:Boolean = true
+        }
+    }
+    FormularioScreen(state = state, onSaveClick = onSaveClick)
+}
+
+
+@Composable
+fun FormularioScreen(modifier: Modifier = Modifier,state: FormularioScreenUiState = FormularioScreenUiState(), onSaveClick:() -> Unit = {}) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         TextField(
-            value = texto,
-            onValueChange = { novoTexto -> texto = novoTexto },
+            value = state.texto,
+            onValueChange = state.onTextChange,
             modifier = modifier.padding(vertical = 32.dp, horizontal = 16.dp),
             label = { Text("Nome do evento") },
             keyboardOptions = KeyboardOptions(
@@ -36,15 +59,19 @@ fun FormularioScreen(modifier: Modifier = Modifier, onSaveClick:(Evento) -> Unit
             ),
 
             )
-        Button(modifier = modifier.padding(horizontal = 16.dp), onClick = {
-            if (texto.isNotBlank()) {
-                val eventoObject = Evento(texto)
-                Log.i("FormularioScreen", "Evento criado: $eventoObject")
-                onSaveClick(eventoObject)
-            } else {
-                Log.i("FormularioScreen", "Texto vazio")
-            }
-        }
+        TextField(
+            value = state.descricao,
+            onValueChange = state.onDescricaoChange,
+            modifier = modifier.padding(vertical = 32.dp, horizontal = 16.dp),
+            label = { Text("descrição do evento") },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next,
+                capitalization = KeyboardCapitalization.Words
+            ),
+
+            )
+        Button(modifier = modifier.padding(horizontal = 16.dp), onClick = onSaveClick
         ) { Text("Salvar") }
     }
 }

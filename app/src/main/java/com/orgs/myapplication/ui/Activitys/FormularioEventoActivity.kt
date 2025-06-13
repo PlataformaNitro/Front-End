@@ -36,11 +36,10 @@ class FormularioEventoActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                FormularioScreen(onSaveClick = {
-                    evento ->  dao.save(evento)
+                FormularioScreen(onSalveClick = {
+                    dao.save(it)
                     finish()
-                }
-                )
+                })
             }
         }
     }
