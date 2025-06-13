@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,14 +30,14 @@ class EventoScreenUiState(
 }
 
 @Composable
-fun EventoScreen(eventos: List<Evento>) {
+fun EventoScreen(viewModel: EventosScreenViewModel,eventos: List<Evento>) {
     val sections = mapOf(
         "todos os eventos" to eventos,
         "Próximos Eventos" to sampleEvents,
         "Por Proximidade" to sampleEventsProximos
     )
 
-    var text by remember {
+    var text by rememberSaveable() {
         mutableStateOf("")
     }
 
@@ -52,14 +53,7 @@ fun EventoScreen(eventos: List<Evento>) {
         }
     }
 
-    val state = remember(eventos,text) {
-        EventoScreenUiState(
-            sections = sections,
-            eventosProucurados = eventosProucurados,
-            searchText = text,
-            onSearchChange = {text = it}
-        )
-    }
+    val state = viewModel.uiState
     EventoScreen(state = state)
 }
 

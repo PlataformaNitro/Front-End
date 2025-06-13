@@ -3,11 +3,13 @@ package com.orgs.myapplication.ui.Activitys
 import EventDao
 import EventoScreen
 import EventoScreenUiState
+import EventosScreenViewModel
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -38,7 +40,8 @@ class MainActivity : ComponentActivity() {
                     )
                 }, Content = {
                     val eventos = dao.eventos()
-                    EventoScreen(eventos = eventos)
+                    val viewModel by viewModels<EventosScreenViewModel>()
+                    EventoScreen(viewModel = viewModel,eventos = eventos)
                 }
                 )
             }

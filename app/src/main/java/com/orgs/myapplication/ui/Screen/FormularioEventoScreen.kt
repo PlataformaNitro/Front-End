@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -29,8 +30,8 @@ class FormularioScreenUiState
 
 @Composable
 fun FormularioScreen(onSalveClick: (Evento) -> Unit = {}) {
-    var texto by remember { mutableStateOf("") }
-    var descricao by remember { mutableStateOf("") }
+    var texto by rememberSaveable { mutableStateOf("") }
+    var descricao by rememberSaveable { mutableStateOf("") }
     val state = FormularioScreenUiState(texto = texto, onTextChange = { texto = it}, descricao = descricao, onDescricaoChange = {descricao = it})
     val onSaveClick = {
         if (texto.isNotBlank() && descricao.isNotBlank()) {
