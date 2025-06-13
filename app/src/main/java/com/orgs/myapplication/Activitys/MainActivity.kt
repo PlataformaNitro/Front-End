@@ -2,6 +2,7 @@ package com.orgs.myapplication.Activitys
 
 import EventDao
 import EventoScreen
+import EventoScreenUiState
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,11 +17,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.orgs.myapplication.Model.Evento
 import com.orgs.myapplication.ui.theme.MyApplicationTheme
 import sampleEvents
 import sampleEventsProximos
+import sampleSection
 
 class MainActivity : ComponentActivity() {
     private val dao = EventDao()
@@ -37,12 +44,8 @@ class MainActivity : ComponentActivity() {
                         )
                     )
                 }, Content = {
-                    val sections = mapOf(
-                        "todos os eventos" to dao.eventos(),
-                        "Próximos Eventos" to sampleEvents,
-                        "Por Proximidade" to sampleEventsProximos
-                    )
-                    EventoScreen(sections = sections)
+                    val eventos = dao.eventos()
+                    EventoScreen(eventos = eventos)
                 }
                 )
             }
@@ -52,12 +55,8 @@ class MainActivity : ComponentActivity() {
     @Preview
     @Composable
     private fun AppPreview() {
-       App {
-            EventoScreen(sections = mapOf(
-                "todos os eventos" to dao.eventos(),
-                "Próximos Eventos" to sampleEvents,
-                "Por Proximidade" to sampleEventsProximos
-            ))
+        App {
+            EventoScreen(state = EventoScreenUiState(sections = sampleSection))
         }
     }
 
@@ -69,7 +68,8 @@ class MainActivity : ComponentActivity() {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = null
-                    )}
+                    )
+                }
             }) { paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)) {
                     Content()

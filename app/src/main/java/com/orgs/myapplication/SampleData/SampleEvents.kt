@@ -16,3 +16,9 @@ val sampleEventsProximos: List<Evento> = listOf(
     Evento(titulo = "Evento Proximo 1")
 
     )
+
+val sampleSection = mapOf(
+    "Todos" to sampleEvents,
+    "Próximos" to sampleEventsProximos
+
+)
