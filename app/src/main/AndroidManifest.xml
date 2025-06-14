@@ -24,6 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.Activitys.FormularioEventoActivity" />
+        <activity android:name=".ui.Activitys.EventoScreenActivity" />
+        <activity android:name=".ui.Activitys.UsuarioActivity" />
+
     </application>
 
 </manifest>

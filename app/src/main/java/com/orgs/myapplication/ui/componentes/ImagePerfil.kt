@@ -6,12 +6,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import br.com.alura.aluvery.dao.User
 import com.orgs.myapplication.R
 
 @Composable
-fun ImagemPerfil(modifier: Modifier = Modifier) {
+fun ImagemPerfil(modifier: Modifier = Modifier,user: User) {
     Image(
-        painter = painterResource(R.drawable.avatarplaceholder),
+        painter = painterResource(user.imagem),
         contentDescription = "placeholder Avatar",
         modifier = modifier.clip(shape = CircleShape),
         contentScale = ContentScale.Crop
@@ -23,5 +24,5 @@ fun ImagemPerfil(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun ImagemPerfilPreview() {
-    ImagemPerfil()
+    ImagemPerfil(user = User("Diego", R.drawable.avatar_1))
 }

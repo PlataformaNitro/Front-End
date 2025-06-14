@@ -1,3 +1,4 @@
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,12 +19,13 @@ import com.orgs.myapplication.Model.Evento
 fun EventoSection(
     title: String = "Próximos Eventos",
     modifier: Modifier = Modifier,
-    listaDeEventos: List<Evento>
+    listaDeEventos: List<Evento>,
+    onVerTodosClick: @Composable () -> Unit = {}
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = modifier) {
         Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = title, modifier = modifier.padding(horizontal = 16.dp), color = Color.White)
-            Text(text = "Ver Todos", modifier = modifier.padding(horizontal = 16.dp), color = Color.White)
+            Text(text = "Ver Todos", modifier = modifier.padding(horizontal = 16.dp).clickable{onVerTodosClick}, color = Color.White)
         }
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),

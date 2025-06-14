@@ -1,6 +1,8 @@
+import android.content.Intent
 import android.graphics.drawable.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +29,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -34,33 +38,45 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.alura.aluvery.dao.User
 import com.orgs.myapplication.R
+import com.orgs.myapplication.ui.Activitys.EventoScreenActivity
+import com.orgs.myapplication.ui.Activitys.UsuarioActivity
 import model.Viajem
+import kotlin.jvm.java
 
 @Composable
-fun HomeScreen(viewModel: EventosScreenViewModel,) {
+fun HomeScreen(viewModel: EventosScreenViewModel) {
     val state by viewModel.uiState.collectAsState()
     HomeScreen(state = state)
 }
 
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier,
-               state: EventoScreenUiState = EventoScreenUiState())
-{
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    state: EventoScreenUiState = EventoScreenUiState(),
+    listUsers: List<User> = sampleUsers
+) {
 
     val sections = state.sections
+    var botaoAtivo by rememberSaveable() { mutableStateOf(false) }
     var text = state.searchText
     val eventosProucurados = state.eventosProucurados
 
@@ -101,6 +117,7 @@ fun HomeScreen(modifier: Modifier = Modifier,
         Viajem("São Paulo", "Rio de Janeiro"),
     )
 
+    val context = LocalContext.current
 
 
     Scaffold { paddingValues ->
@@ -119,7 +136,8 @@ fun HomeScreen(modifier: Modifier = Modifier,
                     ImagemPerfil(
                         modifier = Modifier
                             .padding(start = 18.dp)
-                            .size(58.dp)
+                            .size(58.dp),
+                        user = User("Diego", R.drawable.avatar_1)
                     )
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
@@ -224,16 +242,19 @@ fun HomeScreen(modifier: Modifier = Modifier,
                                 )
                                 Text(
                                     "Ver Mais",
-                                    Modifier.padding(top = 10.dp, end = 16.dp),
+                                    Modifier.padding(top = 10.dp, end = 16.dp).clickable{
+
+                                        context.startActivity(Intent(context, UsuarioActivity::class.java))
+                                    },
                                     Color.White
                                 )
                             }
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                items(usuarios) { user ->
+                                items(listUsers) { user ->
                                     Box(Modifier.padding(top = 12.dp)) {
                                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                             Box {
-                                                ImagemPerfil(Modifier.size(81.dp))
+                                                ImagemPerfil(Modifier.size(81.dp), user = user)
                                                 Box(
                                                     modifier = Modifier
                                                         .padding(horizontal = 2.dp)
@@ -250,7 +271,7 @@ fun HomeScreen(modifier: Modifier = Modifier,
                                                     )
                                                 }
                                             }
-                                            Text(user, color = Color.White, fontSize = 15.sp)
+                                            Text(user.nome, color = Color.White, fontSize = 15.sp)
 
                                         }
                                     }
@@ -260,7 +281,12 @@ fun HomeScreen(modifier: Modifier = Modifier,
                         EventoSection(
                             title = "Eventos",
                             listaDeEventos = sampleEvents,
-                            modifier = Modifier.padding(top = 23.dp)
+                            modifier = Modifier.padding(top = 23.dp),
+                            onVerTodosClick = {
+                                // Navega para a nova Activity
+                                // val context = LocalContext.current // Movido para fora da lambda para evitar erro
+                                context.startActivity(Intent(context, EventoScreenActivity::class.java))
+                            }
                         )
                         EventoSection(
                             title = "Mecanicos",
@@ -284,7 +310,9 @@ fun HomeScreen(modifier: Modifier = Modifier,
                         )
                         Text(
                             "Quem Somos",
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 13.dp, horizontal = 16.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 13.dp, horizontal = 16.dp),
                             color = Color.White,
                             fontSize = 15.sp,
                             textAlign = TextAlign.Center
@@ -293,17 +321,58 @@ fun HomeScreen(modifier: Modifier = Modifier,
                             "Bem-vindo a Nitro, um portal para todos, sendo um ambiente dedicado aos apaixonados por motocicletas e viagens. Fundado em 20 de março de 2025, nossa plataforma nasceu do desejo mutuo de unir motociclistas de diversas regiões, promovendo a proteção, troca de experiências, informações relevantes e, sobretudo, a paixão compartilhada pelas duas rodas.",
                             fontSize = 14.sp,
                             color = Color.White,
-                            modifier = Modifier.padding(start = 16.dp,end = 16.dp,bottom = 16.dp), textAlign = TextAlign.Justify
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                            textAlign = TextAlign.Justify
                         )
                     }
                 } else {
-                       LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                           items (eventosProucurados){
-                               CardItemEvento(evento = it)
-                           }
-                       }
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        Button(
+                            enabled = !botaoAtivo,
+                            colors = ButtonColors(
+                                containerColor = Color.Magenta,
+                                disabledContainerColor = Color.Gray,
+                                contentColor = Color.White,
+                                disabledContentColor = Color.White
+                            ),
+                            onClick = {!botaoAtivo}, modifier = modifier.weight(1f),
+                        ) { Text("eventos") }
+                        Button(
+                            enabled = botaoAtivo,
+                            colors = ButtonColors(
+                                containerColor = Color.Magenta,
+                                disabledContainerColor = Color.Gray,
+                                contentColor = Color.White,
+                                disabledContentColor = Color.White
+                            ), onClick = {}, modifier = modifier.weight(1f),
+                        ) { Text("usuarios") }
+                        Button(
+                            enabled = botaoAtivo,
+                            colors = ButtonColors(
+                                containerColor = Color.Magenta,
+                                disabledContainerColor = Color.Gray,
+                                contentColor = Color.White,
+                                disabledContentColor = Color.White
+                            ),
+                            onClick = {}, modifier = modifier.weight(1f),
+                        ) { Text("clubes") }
+                    }
 
-            }
+                    if(!botaoAtivo){
+                    LazyColumn(
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        items(eventosProucurados) {
+                            CardItemEvento(evento = it)
+                        }
+                    }
+                    }
+
+                }
             }
         }
     }
