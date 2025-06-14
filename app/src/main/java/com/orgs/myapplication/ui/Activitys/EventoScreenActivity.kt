@@ -4,7 +4,6 @@ import EventDao
 import EventoScreen
 import EventoScreenUiState
 import EventosScreenViewModel
-import HomeScreen
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -26,12 +24,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.orgs.myapplication.ui.theme.MyApplicationTheme
 import sampleSection
 
-class MainActivity : ComponentActivity() {
+class EventoScreenActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            MyApplicationTheme {
                 App(onFabClick = {
                     startActivity(
                         Intent(
@@ -41,38 +40,38 @@ class MainActivity : ComponentActivity() {
                     )
                 }, Content = {
                     val viewModel by viewModels<EventosScreenViewModel>()
-                    HomeScreen(viewModel = viewModel)
+                    EventoScreen(viewModel = viewModel)
                 }
                 )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun AppPreview() {
-    App {
-        HomeScreen(state = EventoScreenUiState(sections = sampleSection))
-    }
-}
-
-@Composable
-fun App(onFabClick: () -> Unit = {}, Content: @Composable (Modifier) -> Unit = {}) {
-    Surface {
-        Scaffold(floatingActionButton = {
-            FloatingActionButton(onClick = onFabClick) {
-                Icon(
-                    imageVector = Icons.Default.Place,
-                    contentDescription = null
-                )
-            }
-        }) { paddingValues ->
-            Box() {
-                Content( Modifier.padding(paddingValues))
             }
         }
     }
-}
 
+    @Preview
+    @Composable
+    private fun AppEventoActivityPreview() {
+        AppEventoActivity {
+            EventoScreen(state = EventoScreenUiState(sections = sampleSection))
+        }
+    }
+
+    @Composable
+    fun AppEventoActivity(onFabClick: () -> Unit = {}, Content: @Composable () -> Unit = {}) {
+        Surface {
+            Scaffold(floatingActionButton = {
+                FloatingActionButton(onClick = onFabClick) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null
+                    )
+                }
+            }) { paddingValues ->
+                Box(modifier = Modifier.padding(paddingValues)) {
+                    Content()
+                }
+            }
+        }
+    }
+}
 
 

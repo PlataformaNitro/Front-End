@@ -21,12 +21,12 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun SearchText(text:String, state: EventoScreenUiState) {
+fun SearchText(modifier: Modifier = Modifier,text:String, state: EventoScreenUiState) {
     OutlinedTextField(
         textStyle = TextStyle(color = Color(0xFF9CA7B8), fontWeight = FontWeight.Bold,fontSize = 20.sp),
         value = text,
         onValueChange = state.onSearchChange,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
         ,
