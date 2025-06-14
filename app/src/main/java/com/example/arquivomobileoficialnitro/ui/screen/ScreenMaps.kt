@@ -14,6 +14,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.arquivomobileoficialnitro.ui.components.util.getCurrentLocation
 import com.google.accompanist.permissions.isGranted
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.example.arquivomobileoficialnitro.R
+
+
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -24,6 +28,8 @@ fun ScreenMaps() {
 
     val mapView = remember { MapView(context) }
     var userLocation by rememberSaveable { mutableStateOf<LatLng?>(null) }
+    var addedMarkers by remember { mutableStateOf(listOf<LatLng>()) }
+    val googleMapState = remember { mutableStateOf<com.google.android.gms.maps.GoogleMap?>(null) }
 
     LaunchedEffect(locationPermissionState.status) {
         if (locationPermissionState.status.isGranted) {
@@ -38,7 +44,6 @@ fun ScreenMaps() {
             locationPermissionState.launchPermissionRequest()
         }
     }
-
     DisposableEffect(Unit) {
         mapView.onCreate(null)
         mapView.onStart()
@@ -50,20 +55,78 @@ fun ScreenMaps() {
             mapView.onDestroy()
         }
     }
+    AndroidView(factory = { mapView }) { map ->
+        map.getMapAsync { gMap ->
 
-    AndroidView(factory = { mapView })
+            if (googleMapState.value == null) {
+                googleMapState.value = gMap
 
-    LaunchedEffect(userLocation) {
-        userLocation?.let { location ->
-            mapView.getMapAsync { gMap ->
-                gMap.clear()
-                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 16f))
+                // 👉 Aplica o estilo do mapa
+                val styleSuccess = gMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style)
+                )
+
+                if (!styleSuccess) {
+                    Toast.makeText(context, "Erro ao aplicar estilo do mapa", Toast.LENGTH_SHORT).show()
+                }
+
+                // 👉 Habilita zoom
+                gMap.uiSettings.isZoomControlsEnabled = true
+
+                // 👉 Clique para adicionar marcador
+                gMap.setOnMapClickListener { latLng ->
+                    addedMarkers = addedMarkers + latLng
+                }
+
+                // 👉 Anima ao clicar no marcador
+                gMap.setOnMarkerClickListener { marker ->
+                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 16f))
+                    true
+                }
+            }
+
+
+            // NÃO LIMPE nem adicione marcadores aqui!
+        }
+    }
+    LaunchedEffect(userLocation, addedMarkers) {
+        googleMapState.value?.let { gMap ->
+            gMap.clear()
+
+            // Adiciona marcador da localização atual
+            userLocation?.let { location ->
                 gMap.addMarker(
                     MarkerOptions()
                         .position(location)
                         .title("Você está aqui!")
                 )
             }
+
+            // Adiciona marcadores adicionados
+            addedMarkers.forEachIndexed { index, latLng ->
+                gMap.addMarker(
+                    MarkerOptions()
+                        .position(latLng)
+                        .title("Ponto ${index + 1}")
+                )
+            }
+
+            // Decide para onde mover a câmera:
+            // Se tiver marcadores, foca no último que foi adicionado
+            // Senão, foca na localização do usuário
+
+            val target = if (addedMarkers.isNotEmpty()) {
+                addedMarkers.last()
+            } else {
+                userLocation
+            }
+
+            target?.let {
+                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(it, 16f))
+            }
         }
     }
+
+
+
 }
