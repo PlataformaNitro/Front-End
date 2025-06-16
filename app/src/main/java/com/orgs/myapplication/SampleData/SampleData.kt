@@ -1,4 +1,4 @@
-import br.com.alura.aluvery.dao.User
+import com.orgs.myapplication.Dao.User
 import com.orgs.myapplication.Model.Evento
 import com.orgs.myapplication.R
 

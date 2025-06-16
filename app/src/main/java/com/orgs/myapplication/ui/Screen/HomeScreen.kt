@@ -54,7 +54,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.alura.aluvery.dao.User
+import com.orgs.myapplication.Dao.User
 import com.orgs.myapplication.R
 import com.orgs.myapplication.ui.Activitys.EventoScreenActivity
 import com.orgs.myapplication.ui.Activitys.UsuarioActivity

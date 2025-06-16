@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.R
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.alura.aluvery.dao.User
+import com.orgs.myapplication.Dao.User
 import androidx.compose.ui.unit.dp
 
 @Composable

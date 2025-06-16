@@ -1,4 +1,4 @@
-package br.com.alura.aluvery.dao
+package com.orgs.myapplication.Dao
 
 class User (
   val nome:String,

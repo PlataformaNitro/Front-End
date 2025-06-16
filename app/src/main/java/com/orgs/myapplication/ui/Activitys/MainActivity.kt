@@ -23,6 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.arquivomobileoficialnitro.ui.screen.ScreenMaps
 import com.orgs.myapplication.ui.theme.MyApplicationTheme
 import sampleSection
 
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     startActivity(
                         Intent(
                             this,
-                            FormularioEventoActivity::class.java
+                            MapActivity::class.java
                         )
                     )
                 }, Content = {

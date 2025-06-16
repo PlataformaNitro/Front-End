@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 //import androidx.compose.ui.tooling.preview.datasource.LoremIpsum // Import não utilizado
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.alura.aluvery.dao.User
+import com.orgs.myapplication.Dao.User
 //import br.com.alura.aluvery.extensions.toBrazilianCurrency // Import não utilizado
 //import br.com.alura.aluvery.model.Product // Import não utilizado
 //import br.com.alura.aluvery.ui.theme.AluveryTheme // Import não utilizado
