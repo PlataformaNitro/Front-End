@@ -129,11 +129,11 @@ fun HomeScreen(
                         modifier = Modifier
                             .padding(start = 18.dp)
                             .size(58.dp),
-                        user = User("Diego", R.drawable.avatar_1)
+                        user = User("Convidado", R.drawable.motoqueiro)
                     )
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            "Olá Diego!",
+                            "Olá Convidado!",
                             fontSize = 25.sp,
                             color = Color.White,
                             fontWeight = FontWeight(400),
