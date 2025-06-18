@@ -33,7 +33,6 @@ fun EventoScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
-        SearchText(text = text, state = state)
         Spacer(Modifier)
         if (state.isShowSections()) {
             for (section in sections) {

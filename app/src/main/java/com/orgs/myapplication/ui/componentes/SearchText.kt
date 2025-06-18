@@ -19,29 +19,45 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
 @Composable
-fun SearchText(modifier: Modifier = Modifier,text:String, state: EventoScreenUiState) {
+fun SearchText(
+    modifier: Modifier = Modifier,
+    text: String,
+    onTextChange: (String) -> Unit,
+    placeholder: String = "Nome do evento"
+) {
     OutlinedTextField(
-        textStyle = TextStyle(color = Color(0xFF9CA7B8), fontWeight = FontWeight.Bold,fontSize = 20.sp),
+        textStyle = TextStyle(
+            color = Color(0xFF9CA7B8),
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp
+        ),
         value = text,
-        onValueChange = state.onSearchChange,
+        onValueChange = onTextChange,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-        ,
+            .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(20.dp),
-        placeholder = { Text("Nome do evento",color = Color(0xFF9CA7B8), fontWeight = FontWeight.Bold,fontSize = 20.sp)},
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = null,
-                    tint = Color.White
-                )
+        placeholder = {
+            Text(
+                placeholder,
+                color = Color(0xFF9CA7B8),
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+        },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = null,
+                tint = Color.White
+            )
         },
         colors = TextFieldDefaults.colors(
             unfocusedContainerColor = Color(0xFF1C2228),
             focusedContainerColor = Color(0xFF1C2228),
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent
         )
     )
 }
@@ -49,5 +65,10 @@ fun SearchText(modifier: Modifier = Modifier,text:String, state: EventoScreenUiS
 @Preview
 @Composable
 private fun SearchTextPreview() {
-    SearchText(text = "nomd", state = EventoScreenUiState())
+    SearchText(
+        text = "nomd",
+        onTextChange = {},
+        placeholder = "Pesquisar..."
+    )
 }
+

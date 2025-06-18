@@ -1,4 +1,4 @@
-package com.orgs.myapplication.Dao
+package com.orgs.myapplication.Model
 
 class User (
   val nome:String,

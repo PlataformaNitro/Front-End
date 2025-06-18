@@ -54,7 +54,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.orgs.myapplication.Dao.User
+import com.orgs.myapplication.Model.MotoClube
+import com.orgs.myapplication.Model.User
 import com.orgs.myapplication.R
 import com.orgs.myapplication.ui.Activitys.EventoScreenActivity
 import com.orgs.myapplication.ui.Activitys.UsuarioActivity
@@ -74,24 +75,16 @@ fun HomeScreen(
     state: EventoScreenUiState = EventoScreenUiState(),
     listUsers: List<User> = sampleUsers
 ) {
-
     val sections = state.sections
-    var botaoAtivo by rememberSaveable() { mutableStateOf(false) }
+    var abaSelecionada by rememberSaveable { mutableStateOf(0) } // 0 = Eventos, 1 = Usuários, 2 = Clubes
     var text = state.searchText
     val eventosProucurados = state.eventosProucurados
+    val usuariosProucurados = state.usuariosProucurados
+    val clubesProucurados = state.clubesProucurados
 
     val pageState = rememberPagerState {
         5
     }
-
-    val usuarios = listOf(
-        "user1",
-        "user2",
-        "user 3",
-        "user1",
-        "user2",
-        "user 3"
-    )
 
     val pageItens = listOf(
         R.drawable.isanos_mc,
@@ -118,7 +111,6 @@ fun HomeScreen(
     )
 
     val context = LocalContext.current
-
 
     Scaffold { paddingValues ->
         Box(Modifier.padding(paddingValues)) {
@@ -166,7 +158,9 @@ fun HomeScreen(
                 }
                 SearchText(
                     text = text,
-                    state = state,
+                    onTextChange = { newText ->
+                        state.onSearchChange(newText)
+                    },
                     modifier = Modifier.padding(top = 28.dp)
                 )
                 Divider(
@@ -174,15 +168,15 @@ fun HomeScreen(
                     thickness = 3.dp,
                     modifier = Modifier.padding(top = 11.dp)
                 )
-                //Header
+
+                // Seção de conteúdo (pesquisa ou conteúdo normal)
                 if (state.isShowSections()) {
                     Column(modifier.verticalScroll(rememberScrollState())) {
                         Box(
                             modifier = Modifier
                                 .padding(horizontal = 23.dp, vertical = 10.dp)
                                 .height(197.dp)
-                        )
-                        {
+                        ) {
                             HorizontalPager(state = pageState, pageSize = PageSize.Fill) { page ->
                                 Box(modifier = Modifier.fillMaxSize()) {
                                     Image(
@@ -242,8 +236,7 @@ fun HomeScreen(
                                 )
                                 Text(
                                     "Ver Mais",
-                                    Modifier.padding(top = 10.dp, end = 16.dp).clickable{
-
+                                    Modifier.padding(top = 10.dp, end = 16.dp).clickable {
                                         context.startActivity(Intent(context, UsuarioActivity::class.java))
                                     },
                                     Color.White
@@ -262,7 +255,6 @@ fun HomeScreen(
                                                         .background(color = Color.White)
                                                         .size(30.dp)
                                                         .align(alignment = Alignment.BottomEnd)
-
                                                 ) {
                                                     Icon(
                                                         Icons.Default.Add,
@@ -272,7 +264,6 @@ fun HomeScreen(
                                                 }
                                             }
                                             Text(user.nome, color = Color.White, fontSize = 15.sp)
-
                                         }
                                     }
                                 }
@@ -283,8 +274,6 @@ fun HomeScreen(
                             listaDeEventos = sampleEvents,
                             modifier = Modifier.padding(top = 23.dp),
                             onVerTodosClick = {
-                                // Navega para a nova Activity
-                                // val context = LocalContext.current // Movido para fora da lambda para evitar erro
                                 context.startActivity(Intent(context, EventoScreenActivity::class.java))
                             }
                         )
@@ -303,9 +292,9 @@ fun HomeScreen(
                             viajens = viajens,
                             modifier = Modifier.padding(top = 13.dp),
                         )
-                        EventoSection(
+                        MotoClubeSection(
                             title = "MotoClubes",
-                            listaDeEventos = sampleEvents,
+                            listaDeMotoCLubes = sampleMotoClubes,
                             modifier = Modifier.padding(top = 13.dp)
                         )
                         Text(
@@ -318,7 +307,7 @@ fun HomeScreen(
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            "Bem-vindo a Nitro, um portal para todos, sendo um ambiente dedicado aos apaixonados por motocicletas e viagens. Fundado em 20 de março de 2025, nossa plataforma nasceu do desejo mutuo de unir motociclistas de diversas regiões, promovendo a proteção, troca de experiências, informações relevantes e, sobretudo, a paixão compartilhada pelas duas rodas.",
+                            "Bem-vindo a Nitro, um portal para todos, sendo um ambiente dedicado aos apaixonados por motocicletas e viagens...",
                             fontSize = 14.sp,
                             color = Color.White,
                             modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
@@ -326,54 +315,139 @@ fun HomeScreen(
                         )
                     }
                 } else {
+                    // Abas de pesquisa
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         modifier = Modifier.padding(horizontal = 16.dp)
                     ) {
                         Button(
-                            enabled = !botaoAtivo,
+                            enabled = abaSelecionada != 0,
                             colors = ButtonColors(
                                 containerColor = Color.Magenta,
                                 disabledContainerColor = Color.Gray,
                                 contentColor = Color.White,
                                 disabledContentColor = Color.White
                             ),
-                            onClick = {!botaoAtivo}, modifier = modifier.weight(1f),
-                        ) { Text("eventos") }
+                            onClick = { abaSelecionada = 0 },
+                            modifier = modifier.weight(1f),
+                        ) { Text("Eventos") }
                         Button(
-                            enabled = botaoAtivo,
-                            colors = ButtonColors(
-                                containerColor = Color.Magenta,
-                                disabledContainerColor = Color.Gray,
-                                contentColor = Color.White,
-                                disabledContentColor = Color.White
-                            ), onClick = {}, modifier = modifier.weight(1f),
-                        ) { Text("usuarios") }
-                        Button(
-                            enabled = botaoAtivo,
+                            enabled = abaSelecionada != 1,
                             colors = ButtonColors(
                                 containerColor = Color.Magenta,
                                 disabledContainerColor = Color.Gray,
                                 contentColor = Color.White,
                                 disabledContentColor = Color.White
                             ),
-                            onClick = {}, modifier = modifier.weight(1f),
-                        ) { Text("clubes") }
+                            onClick = { abaSelecionada = 1 },
+                            modifier = modifier.weight(1f),
+                        ) { Text("Usuários") }
+                        Button(
+                            enabled = abaSelecionada != 2,
+                            colors = ButtonColors(
+                                containerColor = Color.Magenta,
+                                disabledContainerColor = Color.Gray,
+                                contentColor = Color.White,
+                                disabledContentColor = Color.White
+                            ),
+                            onClick = { abaSelecionada = 2 },
+                            modifier = modifier.weight(1f),
+                        ) { Text("Clubes") }
                     }
 
-                    if(!botaoAtivo){
+                    // Conteúdo da pesquisa baseado na aba selecionada
                     LazyColumn(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        items(eventosProucurados) {
-                            CardItemEvento(evento = it)
+                        when (abaSelecionada) {
+                            0 -> { // Eventos
+                                items(eventosProucurados) { evento ->
+                                    CardItemEvento(evento = evento)
+                                }
+                                if (eventosProucurados.isEmpty()) {
+                                    item {
+                                        Text(
+                                            "Nenhum evento encontrado",
+                                            color = Color.White,
+                                            modifier = Modifier.fillMaxWidth(),
+                                            textAlign = TextAlign.Center
+                                        )
+                                    }
+                                }
+                            }
+                            1 -> { // Usuários
+                                items(usuariosProucurados) { usuario ->
+                                    CardItemUsuario(usuario = usuario)
+                                }
+                                if (usuariosProucurados.isEmpty()) {
+                                    item {
+                                        Text(
+                                            "Nenhum usuário encontrado",
+                                            color = Color.White,
+                                            modifier = Modifier.fillMaxWidth(),
+                                            textAlign = TextAlign.Center
+                                        )
+                                    }
+                                }
+                            }
+                            2 -> { // Clubes
+                                items(clubesProucurados) { clube ->
+                                    CardItemMotoClube(clube = clube)
+                                }
+                                if (clubesProucurados.isEmpty()) {
+                                    item {
+                                        Text(
+                                            "Nenhum moto clube encontrado",
+                                            color = Color.White,
+                                            modifier = Modifier.fillMaxWidth(),
+                                            textAlign = TextAlign.Center
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
-                    }
-
                 }
             }
+        }
+    }
+}
+
+// Componente para exibir um usuário nos resultados de pesquisa
+@Composable
+fun CardItemUsuario(usuario: User) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFF1A2C47), RoundedCornerShape(8.dp))
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        ImagemPerfil(modifier = Modifier.size(50.dp), user = usuario)
+        Text(usuario.nome, color = Color.White)
+    }
+}
+
+// Componente para exibir um moto clube nos resultados de pesquisa
+@Composable
+fun CardItemMotoClube(clube: MotoClube) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFF1A2C47), RoundedCornerShape(8.dp))
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Image(
+            painter = painterResource(id = clube.imagem),
+            contentDescription = null,
+            modifier = Modifier.size(50.dp)
+        )
+        Column {
+            Text(clube.nome, color = Color.White)
         }
     }
 }

@@ -1,5 +1,6 @@
-import com.orgs.myapplication.Dao.User
+import com.orgs.myapplication.Model.User
 import com.orgs.myapplication.Model.Evento
+import com.orgs.myapplication.Model.MotoClube
 import com.orgs.myapplication.R
 
 val sampleEvents: List<Evento> = listOf(
@@ -13,8 +14,9 @@ val sampleEvents: List<Evento> = listOf(
     Evento(titulo = "Evento 8"),
     Evento(titulo = "Evento 9"),
     Evento(titulo = "Evento 10"),
-
 )
+
+
 
 val sampleEventsProximos: List<Evento> = listOf(
     Evento(titulo = "Evento Proximo 1"),
@@ -41,5 +43,12 @@ val sampleUsers = listOf(
     User(nome = "Joao", imagem = R.drawable.avatar_8),
     User(nome = "Gabriel", imagem = R.drawable.avatar_9),
     User(nome = "Maycon", imagem = R.drawable.avatar_10),
+
+)
+
+val sampleMotoClubes: List<MotoClube> = listOf(
+    MotoClube(nome = "MotoClube 1", imagem = R.drawable.icebiker, descricao = "Descrição do evento 1"),
+    MotoClube(nome = "MotoClube 2", imagem = R.drawable.anrjpi, descricao = "Descrição do evento 2"),
+    MotoClube(nome = "MotoClube 3", imagem = R.drawable.maquinas_m, descricao = "Descrição do evento 3"),
 
 )

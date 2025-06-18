@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.R
 import androidx.compose.ui.tooling.preview.Preview
-import com.orgs.myapplication.Dao.User
+import com.orgs.myapplication.Model.User
 import androidx.compose.ui.unit.dp
 
 @Composable
