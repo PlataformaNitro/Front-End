@@ -24,7 +24,7 @@ fun SearchText(
     modifier: Modifier = Modifier,
     text: String,
     onTextChange: (String) -> Unit,
-    placeholder: String = "Proucure eventos, clubes e usuarios"
+    placeholder: String = "veja users,clubes e eventos"
 ) {
     OutlinedTextField(
         textStyle = TextStyle(

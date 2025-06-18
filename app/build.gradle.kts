@@ -63,4 +63,11 @@ dependencies {
     implementation(libs.accompanist.systemuicontroller)
     //noinspection GradleDependency
     implementation(libs.play.services.location)
+    implementation("androidx.compose.material:material:1.8.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.1")
+    implementation(libs.retrofit)
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.google.code.gson:gson:2.10")
+    implementation("io.coil-kt:coil-compose:2.4.0")
 }

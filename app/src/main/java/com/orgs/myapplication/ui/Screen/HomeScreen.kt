@@ -172,6 +172,7 @@ fun HomeScreen(
                 // Seção de conteúdo (pesquisa ou conteúdo normal)
                 if (state.isShowSections()) {
                     Column(modifier.verticalScroll(rememberScrollState())) {
+                        WeatherScreen()
                         Box(
                             modifier = Modifier
                                 .padding(horizontal = 23.dp, vertical = 10.dp)
@@ -307,7 +308,7 @@ fun HomeScreen(
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            "Bem-vindo a Nitro, um portal para todos, sendo um ambiente dedicado aos apaixonados por motocicletas e viagens...",
+                            "Bem-vindo a Nitro, um portal para todos, sendo um ambiente dedicado aos apaixonados por motocicletas e viagens. Fundado em 20 de março de 2025, nossa plataforma nasceu do desejo mutuo de unir motociclistas de diversas regiões, promovendo a proteção, troca de experiências, informações relevantes e, sobretudo, a paixão compartilhada pelas duas rodas.",
                             fontSize = 14.sp,
                             color = Color.White,
                             modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
