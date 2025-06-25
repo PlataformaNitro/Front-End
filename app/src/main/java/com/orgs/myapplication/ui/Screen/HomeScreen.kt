@@ -33,6 +33,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -57,6 +58,7 @@ import androidx.compose.ui.unit.sp
 import com.orgs.myapplication.Dao.User
 import com.orgs.myapplication.R
 import com.orgs.myapplication.ui.Activitys.EventoScreenActivity
+import com.orgs.myapplication.ui.Activitys.MenuActivity
 import com.orgs.myapplication.ui.Activitys.UsuarioActivity
 import model.Viajem
 import kotlin.jvm.java
@@ -155,14 +157,21 @@ fun HomeScreen(
                             modifier = Modifier.padding(start = 8.dp)
                         )
                     }
-                    Icon(
-                        Icons.Rounded.Menu,
-                        contentDescription = "Menu",
-                        tint = Color.Gray,
-                        modifier = Modifier
-                            .padding(end = 23.dp)
-                            .size(33.dp)
-                    )
+                    val context = LocalContext.current
+
+                    IconButton(
+                        onClick = {
+                            context.startActivity(Intent(context, MenuActivity::class.java))
+                        },
+                        modifier = Modifier.padding(end = 23.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Menu,
+                            contentDescription = "Menu",
+                            tint = Color.Gray,
+                            modifier = Modifier.size(33.dp)
+                        )
+                    }
                 }
                 SearchText(
                     text = text,
