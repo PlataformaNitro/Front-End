@@ -273,6 +273,7 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
                         horizontalAlignment = Alignment.Start,
                         verticalArrangement = Arrangement.spacedBy(30.dp)
                     ) {
+                        Row{
                         Box {
                             Surface(
                                 Modifier
@@ -295,6 +296,20 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
                                 )
                             }
                         }
+                        Text("Facebook",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                fontFamily = FontFamily(Font(R.font.archivo)),
+                                fontWeight = FontWeight(400),
+                                color = Color(0xFFFFFFFF),
+                            ),
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .padding(start = 10.dp)
+                        )
+
+                        }
+                        Row{
                         Box {
                             Surface(
                                 Modifier
@@ -316,6 +331,18 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
                                     contentDescription = null,
                                 )
                             }
+                        }
+                            Text("Instagram",
+                                style = TextStyle(
+                                    fontSize = 20.sp,
+                                    fontFamily = FontFamily(Font(R.font.archivo)),
+                                    fontWeight = FontWeight(400),
+                                    color = Color(0xFFFFFFFF),
+                                ),
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(start = 10.dp)
+                            )
                         }
                     }
 
