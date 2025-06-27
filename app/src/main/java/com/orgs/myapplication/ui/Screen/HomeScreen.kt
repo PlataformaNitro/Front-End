@@ -36,6 +36,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,8 +58,8 @@ import androidx.compose.ui.unit.sp
 import com.orgs.myapplication.Model.MotoClube
 import com.orgs.myapplication.Model.User
 import com.orgs.myapplication.R
-import com.orgs.myapplication.ui.Activitys.EventoScreenActivity
 import com.orgs.myapplication.ui.Activitys.UsuarioActivity
+import kotlinx.coroutines.delay
 import model.Viajem
 import kotlin.jvm.java
 
@@ -82,17 +83,24 @@ fun HomeScreen(
     val usuariosProucurados = state.usuariosProucurados
     val clubesProucurados = state.clubesProucurados
 
-    val pageState = rememberPagerState {
-        5
+    val pageItens = listOf(
+            R.drawable.isanos_mc,
+    R.drawable.lokqw,
+    R.drawable.icebiker,
+    R.drawable.anrjpi,
+    R.drawable.maquinas_m
+    )
+
+    val pageState = rememberPagerState(initialPage = 0) { pageItens.size }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(2000)
+            val nextPage = (pageState.currentPage + 1) % pageItens.size
+            pageState.animateScrollToPage(nextPage)
+        }
     }
 
-    val pageItens = listOf(
-        R.drawable.isanos_mc,
-        R.drawable.lokqw,
-        R.drawable.icebiker,
-        R.drawable.anrjpi,
-        R.drawable.maquinas_m
-    )
 
     val motoClubesNome = listOf(
         "Isanos MC",
@@ -111,6 +119,7 @@ fun HomeScreen(
     )
 
     val context = LocalContext.current
+
 
     Scaffold { paddingValues ->
         Box(Modifier.padding(paddingValues)) {
@@ -275,7 +284,7 @@ fun HomeScreen(
                             listaDeEventos = sampleEvents,
                             modifier = Modifier.padding(top = 23.dp),
                             onVerTodosClick = {
-                                context.startActivity(Intent(context, EventoScreenActivity::class.java))
+                                //todo
                             }
                         )
                         EventoSection(

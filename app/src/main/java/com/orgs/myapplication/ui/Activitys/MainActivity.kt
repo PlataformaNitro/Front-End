@@ -11,21 +11,26 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.arquivomobileoficialnitro.ui.screen.ScreenMaps
+import androidx.compose.ui.unit.dp
 import com.orgs.myapplication.ui.theme.MyApplicationTheme
 import sampleSection
+import kotlin.jvm.java
 
 class MainActivity : ComponentActivity() {
 
@@ -33,18 +38,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-                App(onFabClick = {
-                    startActivity(
-                        Intent(
-                            this,
-                            MapActivity::class.java
-                        )
+            App(
+                onFabClickMap = {
+                startActivity(
+                    Intent(
+                        this,
+                        MapActivity::class.java
                     )
-                }, Content = {
-                    val viewModel by viewModels<EventosScreenViewModel>()
-                    HomeScreen(viewModel = viewModel)
-                }
                 )
+            }, Content = {
+                val viewModel by viewModels<EventosScreenViewModel>()
+                HomeScreen(viewModel = viewModel)
+            },
+                onFabClickWarning = {
+                    startActivity(
+                        Intent(this, WarningActivity::class.java))
+                    })
         }
     }
 }
@@ -58,18 +67,31 @@ private fun AppPreview() {
 }
 
 @Composable
-fun App(onFabClick: () -> Unit = {}, Content: @Composable (Modifier) -> Unit = {}) {
+fun App(
+    onFabClickMap: () -> Unit = {},
+    onFabClickWarning: () -> Unit = {},
+    Content: @Composable (Modifier) -> Unit = {},
+) {
     Surface {
         Scaffold(floatingActionButton = {
-            FloatingActionButton(onClick = onFabClick) {
-                Icon(
-                    imageVector = Icons.Default.Place,
-                    contentDescription = null
-                )
+            Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                FloatingActionButton(onClick = onFabClickMap, containerColor = Color.Red) {
+                    Icon(
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = null,
+                        tint = Color.Yellow
+                    )
+                }
+                FloatingActionButton(onClick = onFabClickWarning) {
+                    Icon(
+                        imageVector = Icons.Default.Place,
+                        contentDescription = null
+                    )
+                }
             }
         }) { paddingValues ->
             Box() {
-                Content( Modifier.padding(paddingValues))
+                Content(Modifier.padding(paddingValues))
             }
         }
     }

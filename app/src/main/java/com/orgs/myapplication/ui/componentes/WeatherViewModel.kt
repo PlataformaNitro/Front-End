@@ -19,7 +19,7 @@ class WeatherViewModel : ViewModel() {
 
     private val service = retrofit.create(WeatherService::class.java)
 
-    fun fetchWeather(city: String = "Lapa", countryCode: String = "BR") {
+    fun fetchWeather(city: String = "São Paulo", countryCode: String = "BR") {
         viewModelScope.launch {
             try {
                 val response = service.getWeather(

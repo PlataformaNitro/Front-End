@@ -70,4 +70,5 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.google.code.gson:gson:2.10")
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
 }
