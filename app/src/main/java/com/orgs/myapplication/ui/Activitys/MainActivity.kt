@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                 startActivity(
                     Intent(
                         this,
-                        MapActivity::class.java
+                        WarningActivity::class.java
                     )
                 )
             }, Content = {
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
             },
                 onFabClickWarning = {
                     startActivity(
-                        Intent(this, WarningActivity::class.java))
+                        Intent(this, MapActivity::class.java))
                     })
         }
     }

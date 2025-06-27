@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.Activitys.FormularioEventoActivity" />
-        <activity android:name=".ui.Activitys.EventoScreenActivity" />
+        <activity android:name=".ui.Activitys.WarningActivity" />
         <activity android:name=".ui.Activitys.UsuarioActivity" />
         <activity android:name=".ui.Activitys.MapActivity"/>
 
