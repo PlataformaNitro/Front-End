@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Icon
@@ -38,71 +40,159 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.arquivomobileoficialnitro.R
+
 /*
 
 Pesquisar layout adaptativo e mudar as fontes
 */
 @Composable
 fun TeladeMotoClubes(modifier: Modifier = Modifier) {
-    Box(Modifier.fillMaxSize()){
-        Box(modifier = Modifier.fillMaxHeight(0.5f) .fillMaxWidth()) {
+    Column(Modifier .verticalScroll(rememberScrollState()) .fillMaxSize()){
+        Box(Modifier
+        .fillMaxWidth().height(280.dp)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
 
-            Image(
-                painter = painterResource(id = R.drawable.banner_motoclube_default),
-                modifier = Modifier.fillMaxSize(),
-                contentDescription = "Mapa",
-                contentScale = ContentScale.FillBounds
-            )
-            IconButton(onClick={}, modifier=Modifier.align(Alignment.TopStart) .padding(10.dp)) {
-                Icon(
-                    imageVector =  Icons.Default.ArrowBackIosNew,
-                    contentDescription = "Voltar",
-                    modifier = Modifier
-                        .width(50.dp)
-                        .height(50.dp)
-                        ,
-                    tint= Color.White
+                Image(
+                    painter = painterResource(id = R.drawable.banner_motoclube_default),
+                    modifier = Modifier.fillMaxSize(),
+                    contentDescription = "Mapa",
+                    contentScale = ContentScale.FillBounds
                 )
+                Box(Modifier.fillMaxSize() .alpha(0.4f) .background(Color.Black)){}
+                Text(
+                    text = "Insanos MC",
+                    style = TextStyle(
+                        fontSize = 32.sp,
+                        fontFamily = FontFamily(Font(R.font.archivo_black)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFFFFFFFF),
+
+                        ),
+                    modifier = Modifier
+                        .align(Alignment.Center),
+                )
+                Text(
+                    text = "24.600.520",
+                    style = TextStyle(
+                        fontSize = 32.sp,
+                        fontFamily = FontFamily(Font(R.font.archivo)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFFFFFFFF),
+
+                        ),
+                    modifier = Modifier.align(Alignment.BottomStart) .padding(vertical = 30.dp, horizontal = 35.dp)
+                )
+                Text(
+                    text = "Membros",
+                    style = TextStyle(
+                        fontSize = 24.sp,
+                        fontFamily = FontFamily(Font(R.font.archivo)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFFFFFFFF),
+
+                        ),
+                    modifier = Modifier.align(Alignment.BottomStart) .padding(vertical = 5.dp, horizontal = 35.dp)
+                )
+                Box(Modifier.align(Alignment.TopEnd) .padding(horizontal = 10.dp, vertical = 10.dp) .width(70.dp)
+                    .height(70.dp)
+                    .background(color = Color(0xFFD9D9D9), shape = RoundedCornerShape(40.dp))){
+                    Column(Modifier.align(Alignment.Center)) {
+                        Text(
+                            text = " 1º",
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            style = TextStyle(
+                                fontSize = 32.sp,
+                                fontFamily = FontFamily(Font(R.font.archivo)),
+                                fontWeight = FontWeight(500),
+                                color = Color(0xFF000000),
+
+                                textAlign = TextAlign.Center,
+                        ))
+                        Text(
+                            text = "no Mundo",
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            style = TextStyle(
+                                fontSize = 11.sp,
+                                fontFamily = FontFamily(Font(R.font.archivo)),
+                                fontWeight = FontWeight(500),
+                                color = Color(0xFF000000),
+
+                                textAlign = TextAlign.Center,
+                            )
+                        )
+                    }
+
+                }
+                IconButton(
+                    onClick = {}, modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(10.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBackIosNew,
+                        contentDescription = "Voltar",
+                        modifier = Modifier
+                            .width(50.dp)
+                            .height(50.dp),
+                        tint = Color.White
+                    )
+
+                }
+
 
             }
-
-
         }
-        Surface(Modifier.align(Alignment.BottomCenter) .fillMaxHeight(0.72f) .fillMaxWidth(),
+
+        Surface(
+            Modifier
+                .fillMaxHeight(0.70f)
+                .fillMaxWidth(),
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
                         Brush.verticalGradient(
-                            colorStops = arrayOf(  0.3f to Color(0xFF012E52), 1f to Color(0xFF010C26) )
+                            colorStops = arrayOf(0.3f to Color(0xFF012E52), 1f to Color(0xFF010C26))
                             // Definindo as posições das cores no gradiente (de 0f a 1f)
                         )
                     )
                     .padding(vertical = 10.dp, horizontal = 5.dp)
             ) {
-                Column(Modifier.fillMaxSize()){
-                    Box(Modifier .align(Alignment.CenterHorizontally)
-                        .fillMaxWidth()
-                        .wrapContentHeight()){
-                        Surface(modifier= Modifier.matchParentSize()  .alpha(0.55f), color = Color(0xFF00183C), shape = RoundedCornerShape(size = 20.dp)
-                        ) {   }
-                        Box(modifier = Modifier.fillMaxWidth() .wrapContentHeight() .padding(10.dp)){
+                Column(
+                    Modifier
+                        .fillMaxSize()
+
+                ) {
+                    Box(
+                        Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                    ) {
+                        Surface(
+                            modifier = Modifier
+                                .matchParentSize()
+                                .alpha(0.55f),
+                            color = Color(0xFF00183C),
+                            shape = RoundedCornerShape(size = 20.dp)
+                        ) { }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .padding(10.dp)
+                        ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text(
-                                    text = "Insanos MC",
-                                    style = TextStyle(
-                                        fontSize = 28.sp,
-                                        fontFamily = FontFamily(Font(R.font.archivo_black)),
-                                        fontWeight = FontWeight(400),
-                                        color = Color(0xFFFFFFFF),
-                                    )
-                                )
+
                                 Text(
                                     text = "Descrição",
                                     modifier = Modifier.padding(top = 10.dp),
                                     style = TextStyle(
-                                        fontSize = 20.sp,
+                                        fontSize = 28.sp,
                                         fontFamily = FontFamily(Font(R.font.archivo_black)),
                                         fontWeight = FontWeight(400),
                                         color = Color(0xFFFFFFFF),
@@ -117,12 +207,11 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
                                         fontFamily = FontFamily(Font(R.font.archivo)),
                                         fontWeight = FontWeight(400),
                                         color = Color(0xFFFFFFFF),
-                                        textAlign = TextAlign.Center,
+                                        textAlign = TextAlign.Start,
                                     )
                                 )
                                 Text(
-                                    text = "Localização",
-                                    modifier = Modifier.padding(top = 40.dp),
+                                    text = "Localização", modifier = Modifier.padding(top = 40.dp),
 
                                     style = TextStyle(
                                         fontSize = 20.sp,
@@ -161,7 +250,7 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
                                         color = Color(0xFFFFFFFF),
                                     )
                                 )
-                                }
+                            }
 
 
                         }
@@ -169,7 +258,9 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
                     }
                     Text(
                         text = "Contatos",
-                        modifier = Modifier.align(Alignment.CenterHorizontally) .padding(top = 20.dp),
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 20.dp),
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.archivo_black)),
@@ -177,42 +268,59 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
                             color = Color(0xFFFFFFFF),
                         )
                     )
+                    Column(
+                        modifier = Modifier.padding(bottom = 40.dp),
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.spacedBy(30.dp)
+                    ) {
+                        Box {
+                            Surface(
+                                Modifier
+                                    .alpha(0.55f)
+                                    .width(90.dp)
+                                    .height(90.dp),
+                                color = Color(0xFF00183C),
+                                shape = RoundedCornerShape(size = 25.dp)
+                            ) {}
+                            IconButton(
+                                onClick = {},
+                                Modifier
+                                    .align(Alignment.Center)
+                                    .width(65.dp)
+                                    .height(65.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(R.drawable.facebook_default),
+                                    contentDescription = null,
+                                )
+                            }
+                        }
+                        Box {
+                            Surface(
+                                Modifier
+                                    .alpha(0.55f)
+                                    .width(90.dp)
+                                    .height(90.dp),
+                                color = Color(0xFF00183C),
+                                shape = RoundedCornerShape(size = 25.dp)
+                            ) {}
+                            IconButton(
+                                onClick = {},
+                                Modifier
+                                    .align(Alignment.Center)
+                                    .width(75.dp)
+                                    .height(75.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(R.drawable.instagram),
+                                    contentDescription = null,
+                                )
+                            }
+                        }
+                    }
 
                 }
-                Row(modifier = Modifier.align(Alignment.BottomCenter) .padding(bottom = 40.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(60.dp)){
-Box{
-                    Surface(
-                        Modifier
-                            .alpha(0.55f)
-                            .width(90.dp)
-                            .height(90.dp),
-                            color = Color(0xFF00183C), shape = RoundedCornerShape(size = 25.dp)
-                    ){
-}
-    IconButton(onClick = {}, Modifier.align(Alignment.Center) .width(65.dp)
-        .height(65.dp)){
-        Image(
-            painter = painterResource(R.drawable.facebook_default),
-            contentDescription = null,
-        )
-                    }}
-                    Box{
-                        Surface(
-                            Modifier
-                                .alpha(0.55f)
-                                .width(90.dp)
-                                .height(90.dp),
-                            color = Color(0xFF00183C), shape = RoundedCornerShape(size = 25.dp)
-                        ){
-                        }
-                        IconButton(onClick = {}, Modifier.align(Alignment.Center) .width(75.dp)
-                            .height(75.dp)){
-                            Image(
-                                painter = painterResource(R.drawable.instagram),
-                                contentDescription = null,
-                            )
-                        }}
-                }
+
 
             }
 
