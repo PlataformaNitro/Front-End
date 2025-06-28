@@ -35,7 +35,7 @@ fun FormularioScreen(onSalveClick: (Evento) -> Unit = {}) {
     val state = FormularioScreenUiState(texto = texto, onTextChange = { texto = it}, descricao = descricao, onDescricaoChange = {descricao = it})
     val onSaveClick = {
         if (texto.isNotBlank() && descricao.isNotBlank()) {
-            val eventoObject = Evento(texto, descricao)
+            val eventoObject = Evento(titulo = texto, descricao =  descricao)
             onSalveClick(eventoObject)
         }else{
             var mostrarError:Boolean = true

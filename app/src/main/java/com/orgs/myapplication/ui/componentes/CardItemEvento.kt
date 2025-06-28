@@ -28,5 +28,5 @@ fun CardItemEvento(modifier: Modifier = Modifier, evento: Evento) {
 @Preview
 @Composable
 private fun CardItemEventoPreview() {
-    CardItemEvento(evento = Evento("Evento 1", "Descrição do evento 1"))
+    CardItemEvento(evento = Evento(titulo = "Evento 1", descricao = "Descrição do evento 1"))
 }

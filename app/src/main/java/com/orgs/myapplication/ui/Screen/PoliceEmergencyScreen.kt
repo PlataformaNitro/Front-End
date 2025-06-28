@@ -1,7 +1,11 @@
+import android.content.Intent
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -25,7 +29,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat.startActivity
 import com.orgs.myapplication.R
+import com.orgs.myapplication.ui.Activitys.MapActivity
 import kotlinx.coroutines.delay
 
 @Composable
@@ -41,6 +48,7 @@ fun PoliceEmergencyScreen(paddingValues: PaddingValues = PaddingValues(0.dp)) {
     var botoesVisiveis by rememberSaveable() {  mutableStateOf(true) }
     var tempoRestanteSegundos = 30
     var textotemporizador by rememberSaveable { mutableStateOf("0:30") }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
 
@@ -65,7 +73,8 @@ fun PoliceEmergencyScreen(paddingValues: PaddingValues = PaddingValues(0.dp)) {
                     Color(0xFF3F0001)  // Lighter Purple
                 )
             ))
-            .padding(paddingValues),
+            .padding(paddingValues)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -184,11 +193,14 @@ fun PoliceEmergencyScreen(paddingValues: PaddingValues = PaddingValues(0.dp)) {
             }
 
             Button(
-                onClick = { apontadorTexto = 2; apontadorFinalDoTexto = 4 },
+                onClick = {
+                    // Ação de cancelamento, pode ser navegar para outra tela ou fechar o app
+                    // Por exemplo, para fechar a atividade atual: (context as? Activity)?.finish()
+                          (context as? Activity)?.finish()},
                 colors = ButtonDefaults.buttonColors(Color.Black),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding( 10.dp, bottom = 20.dp),
+                    .padding(10.dp,0.dp,10.dp,80.dp),
                 contentPadding = PaddingValues(vertical = 15.dp)
             ) {
                 Text("Cancelar", color = Color.White,

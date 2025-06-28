@@ -57,5 +57,5 @@ fun MotoCLubeItem(modifier: Modifier = Modifier, motoClube: MotoClube,larguraTex
 @Preview
 @Composable
 private fun EventoItemPreview() {
-    EventoItem(evento = Evento("Evento 1"))
+    EventoItem(evento = Evento(titulo = "Evento 1"))
 }
