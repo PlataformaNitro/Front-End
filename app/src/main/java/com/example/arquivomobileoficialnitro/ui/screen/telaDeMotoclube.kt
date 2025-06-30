@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -98,11 +99,10 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
                 )
                 Box(Modifier.align(Alignment.TopEnd) .padding(horizontal = 10.dp, vertical = 10.dp) .width(70.dp)
                     .height(70.dp)
-                    .background(color = Color(0xFFD9D9D9), shape = RoundedCornerShape(40.dp))){
+                    .background(color = Color(0xFFD9D9D9), shape = CircleShape)){
                     Column(Modifier.align(Alignment.Center)) {
                         Text(
-                            text = " 1º",
-                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = "1º",
                             style = TextStyle(
                                 fontSize = 32.sp,
                                 fontFamily = FontFamily(Font(R.font.archivo)),
@@ -110,10 +110,12 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
                                 color = Color(0xFF000000),
 
                                 textAlign = TextAlign.Center,
-                        ))
+                        ),
+                                    modifier = Modifier.align(Alignment.CenterHorizontally) .padding(start = 5.dp),
+                        )
                         Text(
                             text = "no Mundo",
-                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            modifier = Modifier .padding(bottom = 5.dp) .align(Alignment.CenterHorizontally),
                             style = TextStyle(
                                 fontSize = 11.sp,
                                 fontFamily = FontFamily(Font(R.font.archivo)),
@@ -190,9 +192,8 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
 
                                 Text(
                                     text = "Descrição",
-                                    modifier = Modifier.padding(top = 10.dp),
                                     style = TextStyle(
-                                        fontSize = 28.sp,
+                                        fontSize = 24.sp,
                                         fontFamily = FontFamily(Font(R.font.archivo_black)),
                                         fontWeight = FontWeight(400),
                                         color = Color(0xFFFFFFFF),
@@ -207,7 +208,7 @@ fun TeladeMotoClubes(modifier: Modifier = Modifier) {
                                         fontFamily = FontFamily(Font(R.font.archivo)),
                                         fontWeight = FontWeight(400),
                                         color = Color(0xFFFFFFFF),
-                                        textAlign = TextAlign.Start,
+                                        textAlign = TextAlign.Center,
                                     )
                                 )
                                 Text(
