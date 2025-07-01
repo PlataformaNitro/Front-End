@@ -57,7 +57,9 @@ fun EventoItem(
                     text = evento.titulo,
                     modifier = Modifier.padding(top = 10.dp, start = 8.dp),
                     color = Color.White,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = evento.descricao,
