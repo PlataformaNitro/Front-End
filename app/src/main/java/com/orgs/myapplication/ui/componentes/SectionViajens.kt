@@ -15,17 +15,27 @@ import androidx.compose.ui.unit.sp
 import model.Viajem
 
 @Composable
-fun SectionViajens(modifier: Modifier = Modifier, viajens: List<Viajem>, title:String) {
-    Column{
-        Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween){
-            Text(title,Modifier.padding(top = 10.dp, start = 16.dp), color = Color.White, fontSize = 15.sp)
-            Text("Ver Mais",Modifier.padding(top = 10.dp, end = 16.dp),Color.White)
+fun SectionViajens(
+    modifier: Modifier = Modifier,
+    viajens: List<Viajem>,
+    title: String,
+    onClickItem: (Viajem) -> Unit
+) {
+    Column {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(title, Modifier.padding(top = 10.dp, start = 16.dp), color = Color.White, fontSize = 15.sp)
+            Text("Ver Mais", Modifier.padding(top = 10.dp, end = 16.dp), Color.White)
         }
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp),contentPadding = PaddingValues(horizontal = 16.dp)) {
-            items(viajens){viajem ->
-                ViajemItem(viajem = viajem)
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp)
+        ) {
+            items(viajens) { viajem ->
+                ViajemItem(viajem = viajem, onClick = onClickItem)
             }
         }
-
     }
 }

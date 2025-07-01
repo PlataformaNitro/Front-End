@@ -1,5 +1,7 @@
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,10 +20,25 @@ import com.orgs.myapplication.R
 import model.Viajem
 
 @Composable
-fun ViajemItem(modifier: Modifier = Modifier, viajem:Viajem) {
-    Box(){
-        Image(painter = painterResource(R.drawable.image_6_), contentDescription = viajem.origem, contentScale = ContentScale.Crop, modifier = Modifier.clip(
-            RoundedCornerShape(10.dp)).size(130.dp))
-        Text(viajem.destino + " -> "+ "\n" + viajem.destino, color = Color.White, modifier = Modifier.align(Alignment.BottomStart).padding(4.dp), fontSize = 15.sp, fontWeight = FontWeight.Bold)
+fun ViajemItem(modifier: Modifier = Modifier, viajem: Viajem, onClick: (Viajem) -> Unit) {
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(10.dp))
+            .size(130.dp)
+            .clickable { onClick(viajem) }
+    ) {
+        Image(
+            painter = painterResource(viajem.imagem),
+            contentDescription = viajem.origem,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+        Text(
+            text = "${viajem.origem} -> \n${viajem.destino}",
+            color = Color.White,
+            modifier = Modifier.align(Alignment.BottomStart).padding(4.dp),
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }

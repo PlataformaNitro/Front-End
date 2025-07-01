@@ -48,6 +48,7 @@
         <activity android:name=".ui.Activitys.WarningActivity" />
         <activity android:name=".ui.Activitys.UsuarioActivity" />
         <activity android:name=".ui.Activitys.MapActivity"/>
+        <activity android:name=".ui.Activitys.RedirecionamentoActivity"/>
 
     </application>
 

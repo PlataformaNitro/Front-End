@@ -55,9 +55,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.arquivomobileoficialnitro.ui.screen.TeladeRedirecionamento
 import com.orgs.myapplication.Model.MotoClube
 import com.orgs.myapplication.Model.User
 import com.orgs.myapplication.R
+import com.orgs.myapplication.ui.Activitys.RedirecionamentoActivity
 import com.orgs.myapplication.ui.Activitys.UsuarioActivity
 import kotlinx.coroutines.delay
 import model.Viajem
@@ -82,6 +84,7 @@ fun HomeScreen(
     val eventosProucurados = state.eventosProucurados
     val usuariosProucurados = state.usuariosProucurados
     val clubesProucurados = state.clubesProucurados
+    var viajemSelecionada by remember { mutableStateOf<Viajem?>(null) }
 
     val pageItens = listOf(
             R.drawable.isanos_mc,
@@ -111,12 +114,18 @@ fun HomeScreen(
     )
 
     val viajens = listOf(
-        Viajem("São Paulo", "Rio de Janeiro"),
-        Viajem("São Paulo", "Rio de Janeiro"),
-        Viajem("São Paulo", "Rio de Janeiro"),
-        Viajem("São Paulo", "Rio de Janeiro"),
-        Viajem("São Paulo", "Rio de Janeiro"),
+        Viajem(R.drawable.viajem_1, "Lapa", "Rota passando pela Marginal e vista do Rio Pinheiros", "Ibirapuera"),
+        Viajem(R.drawable.viajem_2, "Mooca", "Passeio pela Av. Paes de Barros até o parque mais famoso da cidade", "Ibirapuera"),
+        Viajem(R.drawable.viajem_3, "Santana", "Viagem passando pelo centro e região da Luz", "Vila Mariana"),
+        Viajem(R.drawable.viajem_4, "Tatuapé", "Rota por avenidas amplas até a região arborizada da zona sul", "Santo Amaro"),
+        Viajem(R.drawable.viajem_5, "Pinheiros", "Passeio moderno por avenidas como Faria Lima e Juscelino Kubitschek", "Brooklin"),
+        Viajem(R.drawable.viajem_6, "Butantã", "Caminho passando pela USP e chegando em área comercial e residencial", "Morumbi"),
+        Viajem(R.drawable.viajem_9, "Liberdade", "Rota cultural passando pelo centro antigo e museus", "Aclimação"),
+        Viajem(R.drawable.viajem_8, "Perdizes", "Subidas e descidas até a arborizada zona norte", "Tremembé"),
+        Viajem(R.drawable.viajem_1, "São Miguel Paulista", "Viagem longa pela zona leste até bairro nobre e gastronômico", "Vila Madalena"),
+        Viajem(R.drawable.viajem_10, "Capão Redondo", "Rota movimentada com trechos da Estrada de Itapecerica", "Ipiranga")
     )
+
 
     val context = LocalContext.current
 
@@ -293,14 +302,17 @@ fun HomeScreen(
                             modifier = Modifier.padding(top = 13.dp)
                         )
                         SectionViajens(
-                            title = "Viajens Proximas",
                             viajens = viajens,
-                            modifier = Modifier.padding(top = 13.dp),
-                        )
-                        SectionViajens(
-                            title = "Viajens Populares",
-                            viajens = viajens,
-                            modifier = Modifier.padding(top = 13.dp),
+                            title = "Minhas viagens",
+                            onClickItem = { viajem ->
+                                val intent = Intent(context, RedirecionamentoActivity::class.java).apply {
+                                    putExtra("imagem", viajem.imagem)
+                                    putExtra("origem", viajem.origem)
+                                    putExtra("destino", viajem.destino)
+                                    putExtra("descricao", viajem.descricao)
+                                }
+                                context.startActivity(intent)
+                            }
                         )
                         MotoClubeSection(
                             title = "MotoClubes",
