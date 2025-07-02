@@ -9,14 +9,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -32,10 +26,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.orgs.myapplication.Model.User
 import com.orgs.myapplication.R
 
 @Composable
 fun TelaDePerfil(
+    user: User,
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(0.dp)
 ) {
@@ -51,24 +47,19 @@ fun TelaDePerfil(
                     )
                 )
             )
-            .verticalScroll(scrollEstado), verticalArrangement = Arrangement.spacedBy(10.dp)
+            .verticalScroll(scrollEstado),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Box(modifier
-            .fillMaxWidth()
-            .height(311.dp)) {
-            /*
-            Image(
-                painter = painterResource(id = R.drawable.perfil), // Substitua pelo seu logo
-                modifier = Modifier.fillMaxWidth(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop// Tamanho do seu logo
-                // Raio do brilho, ajuste conforme necessário
-            )
-            */
+        Box(
+            modifier
+                .fillMaxWidth()
+                .height(311.dp)
+        ) {
             NitroLogo(modifier.size(94.dp))
+
             Box(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter) // Alinhamento original do Surface
+                    .align(Alignment.BottomCenter)
                     .height(220.dp)
                     .fillMaxWidth(0.95f)
             ) {
@@ -79,14 +70,14 @@ fun TelaDePerfil(
                         .fillMaxSize(),
                     color = Color(0xFF2C486B), shape = RoundedCornerShape(size = 25.dp),
                     shadowElevation = 8.dp,
+                ) {}
 
-                    ) {}
-
-                IconButton(onClick = {
-                    println("Botão de menu clicado")
-                }, Modifier
-                    .align(Alignment.TopStart)
-                    .padding(8.dp)) {
+                IconButton(
+                    onClick = { println("Botão de menu clicado") },
+                    Modifier
+                        .align(Alignment.TopStart)
+                        .padding(8.dp)
+                ) {
                     Icon(
                         painter = painterResource(id = R.drawable.nitrologo),
                         contentDescription = "Menu",
@@ -96,6 +87,7 @@ fun TelaDePerfil(
                         tint = Color.White
                     )
                 }
+
                 Row(
                     Modifier
                         .align(Alignment.BottomCenter)
@@ -104,88 +96,39 @@ fun TelaDePerfil(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Button(
-                        onClick = {},
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFBEDAF7)
-                        ),
-                        elevation = ButtonDefaults.buttonElevation(
-                            defaultElevation = 5.dp,
-                            pressedElevation = 8.dp
-                        ),
-                        contentPadding = PaddingValues(horizontal = 2.dp, vertical = 2.dp),
-                        modifier = Modifier.height(41.dp)
-                    ) {
-                        Text(
-                            text = "Editar Perfil",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.archivo_black)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF00183C),
-
+                    listOf("Editar Perfil", "Minhas Rotas", "Moto Clubes").forEach { texto ->
+                        Button(
+                            onClick = {},
+                            shape = RoundedCornerShape(10.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFBEDAF7)),
+                            elevation = ButtonDefaults.buttonElevation(
+                                defaultElevation = 5.dp,
+                                pressedElevation = 8.dp
+                            ),
+                            contentPadding = PaddingValues(horizontal = 2.dp, vertical = 2.dp),
+                            modifier = Modifier.height(41.dp)
+                        ) {
+                            Text(
+                                text = texto,
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    fontFamily = FontFamily(Font(R.font.archivo_black)),
+                                    fontWeight = FontWeight(400),
+                                    color = Color(0xFF00183C),
                                 )
-                        )
-                    }
-                    Button(
-                        onClick = {},
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFBEDAF7)
-                        ),
-                        elevation = ButtonDefaults.buttonElevation(
-                            defaultElevation = 5.dp,
-                            pressedElevation = 8.dp
-                        ),
-                        contentPadding = PaddingValues(horizontal = 2.dp, vertical = 2.dp),
-                        modifier = Modifier.height(41.dp)
-                    ) {
-                        Text(
-                            text = "Minhas Rotas",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.archivo_black)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF00183C),
-
-                                )
-                        )
-                    }
-                    Button(
-                        onClick = {},
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFBEDAF7)
-                        ),
-                        elevation = ButtonDefaults.buttonElevation(
-                            defaultElevation = 5.dp,
-                            pressedElevation = 8.dp
-                        ),
-                        contentPadding = PaddingValues(horizontal = 2.dp, vertical = 2.dp),
-                        modifier = Modifier.height(41.dp)
-                    ) {
-                        Text(
-                            text = "Moto Clubes",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.archivo_black)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF00183C),
-
-                                )
-
-                        )
+                            )
+                        }
                     }
                 }
             }
+
             Column(
                 modifier = Modifier.align(Alignment.Center),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.avatarplaceholder),
+                    painter = painterResource(id = user.imagem),
                     contentDescription = null,
                     modifier = Modifier
                         .shadow(8.dp, shape = CircleShape)
@@ -194,30 +137,28 @@ fun TelaDePerfil(
                     contentScale = ContentScale.Crop,
                 )
                 Text(
-                    text = "Diego",
+                    text = user.nome,
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.archivo_black)),
                         fontWeight = FontWeight(400),
                         color = Color(0xFFFFFFFF),
-
-                        ), modifier = Modifier.padding(top = 5.dp)
+                    ),
+                    modifier = Modifier.padding(top = 5.dp)
                 )
+                // Aqui não tinha campo cidade na classe, se quiser, pode adicionar.
                 Text(
-                    text = "São Paulo, SP",
+                    text = "São Paulo, SP", // Fixado por enquanto
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.archivo_black)),
                         fontWeight = FontWeight(400),
                         color = Color(0xFFFFFFFF),
-
-                        )
+                    )
                 )
-
             }
-
-
         }
+
         Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Box(
                 Modifier
@@ -233,9 +174,7 @@ fun TelaDePerfil(
                         .align(Alignment.Center)
                         .alpha(0.55f)
                         .fillMaxSize(),
-
-
-                    ) {}
+                ) {}
 
                 Column(
                     modifier = Modifier
@@ -251,44 +190,38 @@ fun TelaDePerfil(
                             fontFamily = FontFamily(Font(R.font.archivo_black)),
                             fontWeight = FontWeight(400),
                             color = Color(0xFFFFFFFF),
-
-                            )
-
-
+                        )
                     )
                     Text(
-                        text = "Biografia: Celebro minha paixão \nsobre duas rodas",
+                        text = "Biografia: ${user.bio}",
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.archivo_black)),
                             fontWeight = FontWeight(700),
                             color = Color(0xFFFFFFFF),
-
-                            )
+                        )
                     )
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = "Moto: Sahara 300 ",
+                            text = "Moto: ${user.moto}",
                             style = TextStyle(
                                 fontSize = 20.sp,
                                 fontFamily = FontFamily(Font(R.font.archivo_black)),
                                 fontWeight = FontWeight(700),
                                 color = Color(0xFFFFFFFF),
-
-                                )
+                            )
                         )
                         Text(
-                            text = "Tipo: Adventure",
+                            text = "Tipo: ${user.tipo}",
                             style = TextStyle(
                                 fontSize = 20.sp,
                                 fontFamily = FontFamily(Font(R.font.archivo_black)),
                                 fontWeight = FontWeight(700),
                                 color = Color(0xFFFFFFFF),
-
-                                )
+                            )
                         )
                     }
                     Row(
@@ -302,30 +235,25 @@ fun TelaDePerfil(
                                 fontFamily = FontFamily(Font(R.font.archivo_black)),
                                 fontWeight = FontWeight(700),
                                 color = Color(0xFFFFFFFF),
-
-                                )
+                            )
                         )
                         Row {
                             Text(
                                 modifier = Modifier.align(Alignment.CenterVertically),
-                                text = "12.450 km",
+                                text = "${user.totalKm} km",
                                 style = TextStyle(
                                     fontSize = 20.sp,
                                     fontFamily = FontFamily(Font(R.font.archivo_black)),
                                     fontWeight = FontWeight(400),
                                     color = Color(0xFFFFFFFF),
-
-                                    )
+                                )
                             )
                         }
-
                     }
-
                 }
             }
-
-
         }
+
         Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Box(
                 Modifier
@@ -341,7 +269,6 @@ fun TelaDePerfil(
                     color = Color(0xFF2C486B),
                     shape = RoundedCornerShape(size = 25.dp),
                     shadowElevation = 8.dp
-
                 ) {}
                 Column(
                     verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -359,8 +286,7 @@ fun TelaDePerfil(
                             fontFamily = FontFamily(Font(R.font.archivo_black)),
                             fontWeight = FontWeight(400),
                             color = Color(0xFFFFFFFF),
-
-                            )
+                        )
                     )
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         Surface(
@@ -372,7 +298,7 @@ fun TelaDePerfil(
                             Image(
                                 painter = painterResource(id = R.drawable.caiovas),
                                 contentDescription = "image description",
-                                contentScale = ContentScale.Crop // imagens bugadas para consertar
+                                contentScale = ContentScale.Crop
                             )
                         }
                         Surface(
@@ -380,47 +306,34 @@ fun TelaDePerfil(
                                 .size(width = 192.dp, height = 168.dp)
                                 .shadow(5.dp),
                             shape = RoundedCornerShape(12.dp)
-
                         ) {
-                            val painter = painterResource(id = R.drawable.image_6_)
-
-                            val larguraImagem = painter.intrinsicSize.width
-                            val alturaImagem = painter.intrinsicSize.height
-
-                            // Calculando as escalas necessárias para preencher o contêiner
-                            val escalaX = (192 / larguraImagem) + 1f
-                            val escalaY = (168 / alturaImagem) + 1f
-                            var escala = maxOf(escalaX, escalaY)
                             Image(
                                 painter = painterResource(id = R.drawable.anrjpi),
                                 contentDescription = "image description",
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
                                     .width(400.dp)
-                                    .height(400.dp)
-                                    .graphicsLayer {
-                                        scaleX = escalaX  // Ajuste conforme necessário
-                                        scaleY = escalaY // Ajuste conforme necessário
-                                    },
+                                    .height(400.dp),
                                 alignment = Alignment.Center,
-
-                                )
+                            )
                         }
-
-
                     }
                 }
             }
         }
     }
-
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun TelaDePerfilPreview() {
-    Scaffold { paddingValues -> TelaDePerfil(paddingValues = paddingValues) }
-
+    val userPreview = User(
+        nome = "Diego",
+        imagem = R.drawable.avatarplaceholder,
+        bio = "Celebro minha paixão \nsobre duas rodas",
+        moto = "Sahara 300",
+        tipo = "Adventure",
+        totalKm = 12450
+    )
+    Scaffold { paddingValues -> TelaDePerfil(user = userPreview, paddingValues = paddingValues) }
 }
-
-

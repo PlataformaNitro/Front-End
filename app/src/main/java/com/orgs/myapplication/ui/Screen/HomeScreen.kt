@@ -172,7 +172,14 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(start = 18.dp)
                                 .size(58.dp),
-                            user = User("Convidado", R.drawable.motoqueiro)
+                            User(
+                                nome = "Convidade",
+                                imagem = R.drawable.motoqueiro,
+                                bio = "Celebro minha paixão sobre duas rodas.",
+                                moto = "Sahara 300",
+                                tipo = "Adventure",
+                                totalKm = 12450
+                            )
                         )
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
@@ -292,26 +299,7 @@ fun HomeScreen(
                                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                     items(listUsers) { user ->
                                         Box(Modifier.padding(top = 12.dp)) {
-                                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                                Box {
-                                                    ImagemPerfil(Modifier.size(81.dp), user = user)
-                                                    Box(
-                                                        modifier = Modifier
-                                                            .padding(horizontal = 2.dp)
-                                                            .clip(CircleShape)
-                                                            .background(color = Color.White)
-                                                            .size(30.dp)
-                                                            .align(alignment = Alignment.BottomEnd)
-                                                    ) {
-                                                        Icon(
-                                                            Icons.Default.Add,
-                                                            contentDescription = "adicionar",
-                                                            modifier.align(Alignment.Center)
-                                                        )
-                                                    }
-                                                }
-                                                Text(user.nome, color = Color.White, fontSize = 15.sp)
-                                            }
+                                            UserCard(user)
                                         }
                                     }
                                 }
@@ -324,9 +312,9 @@ fun HomeScreen(
                                     //todo
                                 }
                             )
-                            EventoSection(
+                            MecanicosSection(
                                 title = "Mecanicos",
-                                listaDeEventos = sampleMecanicos,
+                                listaDeMecanicos = sampleMecanicos,
                                 modifier = Modifier.padding(top = 13.dp)
                             )
                             SectionViajens(

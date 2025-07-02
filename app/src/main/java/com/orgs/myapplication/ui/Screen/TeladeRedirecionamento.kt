@@ -1,7 +1,10 @@
 package com.example.arquivomobileoficialnitro.ui.screen
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +34,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -39,11 +43,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import com.orgs.myapplication.R
+import com.orgs.myapplication.ui.Activitys.MapActivity
 import model.Viajem
 
 @Composable
 fun TeladeRedirecionamento(viajem: Viajem, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
     Box(modifier.fillMaxSize()) {
         Box(modifier = Modifier.fillMaxHeight(0.3f).fillMaxWidth()) {
             Image(
@@ -53,7 +61,9 @@ fun TeladeRedirecionamento(viajem: Viajem, modifier: Modifier = Modifier) {
                 contentScale = ContentScale.FillBounds
             )
             IconButton(
-                onClick = { /* ação de voltar, por exemplo */ },
+                onClick = {
+                    (context as? Activity)?.finish() // Fecha a tela atual
+                },
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .shadow(
@@ -221,7 +231,20 @@ fun TeladeRedirecionamento(viajem: Viajem, modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(30.dp)
                 ) {
-                    IconButton(onClick = { /* ação compartilhar */ }, modifier = Modifier.size(49.dp)) {
+                    IconButton(
+                        onClick = {
+                            val intent = Intent(Intent.ACTION_SEND).apply {
+                                type = "text/plain"
+                                putExtra(Intent.EXTRA_SUBJECT, "Confira essa viagem!")
+                                putExtra(
+                                    Intent.EXTRA_TEXT,
+                                    "Olha só essa viagem incrível no app Nitro! 🚀🌍"
+                                )
+                            }
+                            context.startActivity(Intent.createChooser(intent, "Compartilhar via"))
+                        },
+                        modifier = Modifier.size(49.dp)
+                    ) {
                         Icon(
                             painter = painterResource(R.drawable.icone_compartihamento),
                             contentDescription = "Compartilhar",
@@ -231,8 +254,11 @@ fun TeladeRedirecionamento(viajem: Viajem, modifier: Modifier = Modifier) {
                             tint = Color.White
                         )
                     }
+
                     Button(
-                        onClick = { /* ação especialidade */ },
+                        onClick = { val intent = Intent(context, MapActivity::class.java)
+                                     context.startActivity(intent)
+                                  },
                         modifier = Modifier
                             .width(94.dp)
                             .height(90.dp),

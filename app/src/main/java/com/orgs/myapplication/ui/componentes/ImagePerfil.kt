@@ -24,5 +24,12 @@ fun ImagemPerfil(modifier: Modifier = Modifier,user: User) {
 @Preview
 @Composable
 private fun ImagemPerfilPreview() {
-    ImagemPerfil(user = User("Diego", R.drawable.avatar_1))
+    ImagemPerfil(user =  User(
+        nome = "Diego",
+        imagem = R.drawable.avatar_2,
+        bio = "Celebro minha paixão sobre duas rodas.",
+        moto = "Sahara 300",
+        tipo = "Adventure",
+        totalKm = 12450
+    ),)
 }

@@ -1,7 +1,6 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,13 +20,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.orgs.myapplication.Model.Evento
+import com.orgs.myapplication.Model.Mecanico
 import com.orgs.myapplication.R
 
 @Composable
-fun EventoItem(
+fun MecanicoItem(
     modifier: Modifier = Modifier,
-    evento: Evento,
+    mecanico: Mecanico,
     larguraTexto: Dp = 130.dp
 ) {
     var mostrarDialog by remember { mutableStateOf(false) }
@@ -39,12 +38,12 @@ fun EventoItem(
             .padding(vertical = 14.dp, horizontal = 5.dp)
             .width(243.dp)
             .clip(RoundedCornerShape(10.dp))
-            .clickable { mostrarDialog = true } // 👉 clique mostra modal
+            .clickable { mostrarDialog = true }
     ) {
         Row {
             Image(
-                painter = painterResource(evento.imagem),
-                contentDescription = "Imagem do evento",
+                painter = painterResource(mecanico.imagem),
+                contentDescription = "Imagem do mecânico",
                 modifier = Modifier
                     .height(180.dp)
                     .width(120.dp)
@@ -57,7 +56,7 @@ fun EventoItem(
                     .padding(start = 8.dp)
             ) {
                 Text(
-                    text = evento.titulo,
+                    text = mecanico.nome,
                     modifier = Modifier.padding(top = 10.dp, start = 8.dp),
                     color = Color.White,
                     fontSize = 16.sp,
@@ -65,9 +64,9 @@ fun EventoItem(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = evento.descricao,
+                    text = mecanico.descricao,
                     modifier = Modifier.padding(top = 11.dp, start = 8.dp),
-                    color = Color.Red,
+                    color = Color.LightGray,
                     fontSize = 13.sp,
                     maxLines = 6,
                     overflow = TextOverflow.Ellipsis
@@ -115,7 +114,7 @@ fun EventoItem(
                     }
 
                     Image(
-                        painter = painterResource(evento.imagem),
+                        painter = painterResource(mecanico.imagem),
                         contentDescription = "Imagem ampliada",
                         modifier = Modifier
                             .fillMaxWidth()
@@ -127,7 +126,7 @@ fun EventoItem(
                     Spacer(modifier = Modifier.height(12.dp))
 
                     Text(
-                        text = evento.titulo,
+                        text = mecanico.nome,
                         color = Color.White,
                         fontSize = 20.sp
                     )
@@ -135,7 +134,7 @@ fun EventoItem(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = evento.descricao,
+                        text = mecanico.descricao,
                         color = Color.LightGray,
                         fontSize = 16.sp
                     )
@@ -143,45 +142,44 @@ fun EventoItem(
                     Spacer(modifier = Modifier.height(12.dp))
 
                     Text(
-                        text = "📅 ${evento.data}  ⏰ ${evento.hora}",
+                        text = "📍 Local: ${mecanico.local}",
                         color = Color.Gray,
                         fontSize = fontSizeSmall
                     )
 
                     Text(
-                        text = "📍 ${evento.local}",
+                        text = "📞 Contato: ${mecanico.contato}",
                         color = Color.Gray,
                         fontSize = fontSizeSmall
                     )
 
                     Text(
-                        text = "💰 ${evento.preco}",
+                        text = "⏰ Horário: ${mecanico.horario}",
                         color = Color.Gray,
                         fontSize = fontSizeSmall
                     )
 
                     Text(
-                        text = "🎯 Categoria: ${evento.categoria}",
+                        text = "🛠️ Especialidades: ${mecanico.especialidades.joinToString(", ")}",
                         color = Color.Gray,
                         fontSize = fontSizeSmall
                     )
 
                     Text(
-                        text = "👤 Organizador: ${evento.organizador}",
+                        text = "⭐ Avaliação: ${mecanico.avaliacao}",
                         color = Color.Gray,
                         fontSize = fontSizeSmall
                     )
 
                     Text(
-                        text = "👥 Participantes confirmados: ${evento.participantes}",
+                        text = "📆 Experiência: ${mecanico.experiencia} anos",
                         color = Color.Gray,
                         fontSize = fontSizeSmall
                     )
 
-                    if (evento.tags.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(8.dp))
+                    if (mecanico.destaque.isNotEmpty()) {
                         Text(
-                            text = "🏷️ Tags: ${evento.tags.joinToString(", ")}",
+                            text = "🏅 Destaques: ${mecanico.destaque.joinToString(", ")}",
                             color = Color.Gray,
                             fontSize = fontSizeSmall
                         )
@@ -199,11 +197,22 @@ fun EventoItem(
             }
         }
     }
-
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun EventoItemPreview() {
-    EventoItem(evento = Evento(titulo = "Evento 1", descricao = "Descrição completa do evento. Detalhes completos para mostrar no modal."), larguraTexto = 130.dp)
+private fun MecanicoItemPreview() {
+    val mecanico = Mecanico(
+        imagem = R.drawable.moto_tool_1,
+        nome = "Carlos da Oficina Rápida",
+        descricao = "Especialista em diagnósticos rápidos e manutenção preventiva.",
+        especialidades = listOf("Troca de óleo", "Freios", "Injeção eletrônica"),
+        avaliacao = 4.7,
+        contato = "(11) 99876-1234",
+        horario = "Seg a Sab: 08h às 18h",
+        experiencia = 15,
+        destaque = listOf("Atendimento rápido", "Peças originais"),
+        local = "São Paulo - SP"
+    )
+    MecanicoItem(mecanico = mecanico)
 }

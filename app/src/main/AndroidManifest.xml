@@ -48,7 +48,9 @@
         <activity android:name=".ui.Activitys.WarningActivity" />
         <activity android:name=".ui.Activitys.UsuarioActivity" />
         <activity android:name=".ui.Activitys.MapActivity"/>
+        <activity android:name=".ui.Activitys.ConfiguracoesActivity"/>
         <activity android:name=".ui.Activitys.RedirecionamentoActivity"/>
+        <activity android:name="com.example.nitroapp.ui.screens.PerfilActivity"/>
 
     </application>
 

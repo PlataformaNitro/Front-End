@@ -94,9 +94,13 @@ private fun UsuarioItemPreview() { // Nome da Preview corrigido para refletir o 
     MyApplicationTheme {
         Surface {
             UsuarioItem(
-                user = User(
-                    nome = "ruan",
-                    imagem = R.drawable.avatarplaceholder
+                user =  User(
+                    nome = "Diego",
+                    imagem = R.drawable.avatar_2,
+                    bio = "Celebro minha paixão sobre duas rodas.",
+                    moto = "Sahara 300",
+                    tipo = "Adventure",
+                    totalKm = 12450
                 )
             )
         }

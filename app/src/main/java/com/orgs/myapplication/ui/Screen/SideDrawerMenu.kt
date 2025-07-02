@@ -1,47 +1,55 @@
 package com.example.nitroapp.ui.components
 
-import androidx.compose.foundation.Image
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.font.FontWeight
+import com.example.nitroapp.ui.screens.PerfilActivity
 import com.orgs.myapplication.R
+import com.orgs.myapplication.ui.Activitys.ConfiguracoesActivity
+
 
 data class MenuItem(val title: String, val icon: ImageVector)
-
 
 @Composable
 fun SideDrawerMenu(
     onItemClick: (String) -> Unit,
-    modifier: Modifier = Modifier)
-{
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
+
     Column(
         modifier = modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .background(Brush.verticalGradient(listOf(Color(0xFF001233), Color(0xFF003366))))
+            .background(
+                Brush.verticalGradient(
+                    listOf(Color(0xFF001233), Color(0xFF003366))
+                )
+            )
             .padding(16.dp)
             .verticalScroll(scrollState)
     ) {
-        // Botão de fechar
+        // Botão fechar menu
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
@@ -57,49 +65,33 @@ fun SideDrawerMenu(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Nitro Pro card
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            backgroundColor = Color(0xFF375A8C),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .clickable { onItemClick("Seja Nitro Pro") }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.motinha),
-                    contentDescription = "Icone de moto",
-                    modifier = Modifier.size(90.dp)
-                )
-                Text("Seja Nitro Pro", color = Color.White, fontWeight = FontWeight.Bold)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
         // Menu items
         val menuItems = listOf(
-            MenuItem("Inicio", Icons.Filled.Home),
             MenuItem("Perfil", Icons.Filled.Person),
             MenuItem("Configuração", Icons.Filled.Settings),
-            MenuItem("Moto Clube", Icons.Filled.LocationOn),
+            MenuItem("Favoritos", Icons.Filled.Star),
             MenuItem("Rotas Salvas", Icons.Filled.Place),
             MenuItem("Ajuda", Icons.Filled.Info),
             MenuItem("Sair", Icons.Filled.ExitToApp)
         )
 
         menuItems.forEach { item ->
-            DrawerMenuItem(item = item) { onItemClick(it) }
+            DrawerMenuItem(item = item) { title ->
+                when (title) {
+                    "Perfil" -> {
+                        context.startActivity(Intent(context, PerfilActivity::class.java))
+                    }
+                    "Configuração" -> {
+                        context.startActivity(Intent(context, ConfiguracoesActivity::class.java))
+                    }
+                    else -> onItemClick(title)
+                }
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
     }
 }
-
 
 @Composable
 fun DrawerMenuItem(item: MenuItem, onClick: (String) -> Unit) {
@@ -117,7 +109,12 @@ fun DrawerMenuItem(item: MenuItem, onClick: (String) -> Unit) {
             modifier = Modifier.size(40.dp)
         )
         Spacer(modifier = Modifier.width(16.dp))
-        Text(item.title, color = Color.White, fontSize = 30.sp, fontWeight = FontWeight.Bold)
+        Text(
+            text = item.title,
+            color = Color.White,
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
