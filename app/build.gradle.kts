@@ -43,6 +43,7 @@ dependencies {
     implementation (libs.androidx.material)
     implementation (libs.androidx.compose.ui.ui.tooling.preview)
     implementation (libs.androidx.lifecycle.runtime.ktx)
+    implementation("io.agora.rtc:voice-sdk:4.2.2")
     implementation (libs.androidx.activity.compose)
     implementation (libs.material.icons.extended)
     implementation ("androidx.compose.material:material:1.8.2")
