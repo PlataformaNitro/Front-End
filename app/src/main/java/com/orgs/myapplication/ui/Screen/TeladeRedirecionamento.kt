@@ -27,6 +27,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -48,11 +52,13 @@ import com.orgs.myapplication.R
 import com.orgs.myapplication.ui.Activitys.MapActivity
 import model.Viajem
 
+
 @Composable
 fun TeladeRedirecionamento(viajem: Viajem, modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    var favorito by remember{mutableStateOf(false)}
 
-    Box(modifier.fillMaxSize()) {
+        Box(modifier.fillMaxSize()) {
         Box(modifier = Modifier.fillMaxHeight(0.3f).fillMaxWidth()) {
             Image(
                 painter = painterResource(id = viajem.imagem),
@@ -267,16 +273,16 @@ fun TeladeRedirecionamento(viajem: Viajem, modifier: Modifier = Modifier) {
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.icone_de_especialidade),
-                            contentDescription = "Especialidade",
+                            contentDescription = "Viajar",
                             tint = Color.Black,
                             modifier = Modifier
                                 .width(67.dp)
                                 .height(60.dp)
                         )
                     }
-                    IconButton(onClick = { /* ação estrela */ }, modifier = Modifier.size(49.dp)) {
+                    IconButton(onClick = { favorito = !favorito}, modifier = Modifier.size(49.dp)) {
                         Icon(
-                            painter = painterResource(R.drawable.icone_estrela_desativada),
+                            painter = if (favorito) painterResource(R.drawable.icone_estrela_ativada) else painterResource(R.drawable.icone_estrela_desativada),
                             contentDescription = "Compartilhar",
                             modifier = Modifier
                                 .width(59.dp)
