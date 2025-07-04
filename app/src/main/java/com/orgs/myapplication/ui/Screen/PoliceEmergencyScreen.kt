@@ -1,4 +1,5 @@
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -7,6 +8,7 @@ import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.graphics.PixelFormat
+import android.os.Bundle
 import android.os.IBinder
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import android.provider.Settings
+import android.telecom.TelecomManager
 import android.telephony.PhoneStateListener
 import android.telephony.SmsManager
 import android.telephony.TelephonyManager
@@ -51,7 +54,7 @@ import com.example.arquivomobileoficialnitro.ui.screen.EmergencyOverlayService
 import com.orgs.myapplication.R
 
 @Composable
-fun PoliceEmergencyScreen(paddingValues: PaddingValues = PaddingValues(0.dp),  onCancelClick: () -> Unit = {}) {
+fun PoliceEmergencyScreen(paddingValues: PaddingValues = PaddingValues(bottom = 40.dp),  onCancelClick: () -> Unit = {}) {
     val textos = listOf(
         "Uma \nambulância ", "Uma \nautoridade policial ", "Um \ncaminhão de bombeiro "
     )
@@ -61,7 +64,7 @@ fun PoliceEmergencyScreen(paddingValues: PaddingValues = PaddingValues(0.dp),  o
     val corDesativado = Color(0xFF001F54)
     val corAtivado = Color.White
     var botoesVisiveis by rememberSaveable { mutableStateOf(true) }
-    var tempoRestanteSegundos = 15
+    var tempoRestanteSegundos by remember { mutableIntStateOf(15) }
     var textoTemporizador by rememberSaveable { mutableStateOf("0:30") }
     val context = LocalContext.current
 
@@ -143,17 +146,16 @@ fun PoliceEmergencyScreen(paddingValues: PaddingValues = PaddingValues(0.dp),  o
             Toast.makeText(context, "Não foi possível abrir o discador", Toast.LENGTH_LONG).show()
         }
     }
-
     fun fazerChamadaEmergencia(context: Context, tipoEmergencia: Int) {
         try {
-            var numeroParaLigar = when (tipoEmergencia) {
+            val numeroParaLigar = when (tipoEmergencia) {
                 0 -> "192" // SAMU
                 1 -> "190" // Polícia
                 2 -> "193" // Bombeiros
                 else -> ""
             }
 
-            // Para testes, use um número real (remova esta linha em produção)
+            Log.d("OVERLAY_DEBUG", "Iniciando chamada para: $numeroParaLigar")
 
             // Verificar permissão de overlay
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
@@ -163,28 +165,27 @@ fun PoliceEmergencyScreen(paddingValues: PaddingValues = PaddingValues(0.dp),  o
                 return
             }
 
-            // Iniciar serviço de overlay
+            // Iniciar o serviço de overlay IMEDIATAMENTE
             val overlayIntent = Intent(context, EmergencyOverlayService::class.java).apply {
                 putExtra("NUMERO", numeroParaLigar)
                 putExtra("TIPO_EMERGENCIA", tipoEmergencia)
             }
             context.startService(overlayIntent)
+            Log.d("OVERLAY_DEBUG", "Serviço de overlay iniciado")
 
-            // Pequeno delay para garantir que o overlay seja criado
+            // Aguardar um pouco para o serviço inicializar
             android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                try {
-                    val callIntent = Intent(Intent.ACTION_CALL).apply {
-                        data = "tel:$numeroParaLigar".toUri()
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    }
-                    context.startActivity(callIntent)
-                } catch (e: Exception) {
-                    Log.e("CHAMADA_DEBUG", "Erro ao fazer chamada: ${e.message}", e)
-                    // Parar o serviço se a chamada falhar
-                    context.stopService(Intent(context, EmergencyOverlayService::class.java))
-                    abrirDiscadorEmergencia(context, tipoEmergencia)
+                // Fazer a chamada
+                val callIntent = Intent(Intent.ACTION_CALL).apply {
+                    data = "tel:$numeroParaLigar".toUri()
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 }
-            }, 500) // Delay de 500ms
+                context.startActivity(callIntent)
+                Log.d("OVERLAY_DEBUG", "Chamada iniciada")
+
+                // Iniciar monitoramento da chamada
+                monitorarEstadoChamada(context)
+            }, 500) // Aguardar 500ms
 
         } catch (e: Exception) {
             Log.e("CHAMADA_DEBUG", "Erro geral: ${e.message}", e)
@@ -213,8 +214,7 @@ fun PoliceEmergencyScreen(paddingValues: PaddingValues = PaddingValues(0.dp),  o
 
             // Dividir mensagem se for muito longa
             val parts = smsManager.divideMessage(mensagem)
-
-                smsManager.sendMultipartTextMessage(numeroDestino, null, parts, null, null)
+            smsManager.sendMultipartTextMessage(numeroDestino, null, parts, null, null)
 
             Toast.makeText(
                 context,
@@ -268,24 +268,7 @@ fun PoliceEmergencyScreen(paddingValues: PaddingValues = PaddingValues(0.dp),  o
     )
 
     // Launcher para solicitar permissão de ANSWER_PHONE_CALLS
-    val answerCallsPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted ->
-            if (isGranted) {
-                Toast.makeText(
-                    context,
-                    "Permissão para gerenciar chamadas concedida",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(
-                    context,
-                    "Permissão para gerenciar chamadas negada. Algumas funcionalidades podem não funcionar.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-    )
+
     // Efeito para o temporizador
     LaunchedEffect(Unit) {
         while (tempoRestanteSegundos > 0) {

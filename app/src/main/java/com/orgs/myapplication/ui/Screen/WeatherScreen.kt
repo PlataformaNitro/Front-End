@@ -55,6 +55,8 @@ fun WeatherScreen() {
             is WeatherState.Error -> {
                 Text("Erro: ${currentState.message}")
             }
+
+            else -> {}
         }
     }
 }
