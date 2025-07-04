@@ -47,6 +47,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.arquivomobileoficialnitro.ui.screen.badgenotification
 import com.orgs.myapplication.Model.User
 import com.orgs.myapplication.R
 import java.util.logging.Filter
@@ -365,20 +366,8 @@ fun TopNavigationBar() {
                 )
             }
             // Contador de mensagens
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .background(notificationBadgeColor, CircleShape)
-                    .offset(x = 4.dp, y = (-4).dp), // Ajusta a posição
-            ) {
-                Text(
-                    text = "+9",
-                    fontSize = 10.sp,
-                    modifier = Modifier
-                        .padding(horizontal = 4.dp, vertical = 2.dp)
-                        .align(Alignment.Center)
-                )
-            }
+            badgenotification(Modifier .align(Alignment.BottomEnd))
+
         }
     }
 }
