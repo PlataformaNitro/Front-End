@@ -353,8 +353,6 @@ fun ChatItemPreview() {
 fun badgenotification(modifier: Modifier = Modifier) {
     Box(modifier
         .padding(start = 20.dp, top = 15.dp)
-        .width(18.dp)
-        .height(18.dp)
         .background(color = Color(0xFF4A83DE), shape = RoundedCornerShape(30.dp)
         )
     ){

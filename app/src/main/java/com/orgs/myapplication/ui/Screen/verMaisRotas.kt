@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -173,7 +174,7 @@ fun MechanicTabs() {
         .background(color = Color(0xFF091D3A)))
     Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        Spacer(Modifier)
+        Spacer(Modifier.width(10.dp))
         FilterChip("Recentes")
         FilterChip("Populares")
         FilterChip("Para Você")
@@ -228,6 +229,7 @@ fun MechanicCard(drawableId: Int) {
             modifier = Modifier
                 .width(180.dp)
                 .height(230.dp)
+                .clip(RoundedCornerShape(10.dp))
                 .background(Color.DarkGray), // Cor de fundo para os cards
             contentAlignment = Alignment.Center
         ) {
@@ -235,9 +237,8 @@ fun MechanicCard(drawableId: Int) {
                 painter = painterResource(id = drawableId),
                 contentDescription = null, // Descrição viria de um modelo de dados
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(8.dp),
-                contentScale = ContentScale.Fit
+                    .fillMaxSize(),
+                contentScale = ContentScale.FillBounds
             )
         }
 
@@ -267,12 +268,12 @@ fun TopNavigationBar() {
         // Botão de retorno
         IconButton(
             onClick = { /* Ação de retorno */ },
-            modifier = Modifier
+            modifier = Modifier.align(Alignment.CenterVertically)
         ) {
             Image(
                 painter =  painterResource(R.drawable.voltar_padrao),
                 contentDescription = "Voltar",
-                modifier = Modifier.size(42.dp)
+                modifier = Modifier.size(42.dp).align(Alignment.CenterVertically),
             )
         }
 
@@ -284,6 +285,7 @@ fun TopNavigationBar() {
             onValueChange = { searchText = it },
             modifier = Modifier
                 .weight(1f)
+                .height(55.dp)
 ,            placeholder = {
                 Text(
                     "Buscar",
