@@ -49,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.arquivomobileoficialnitro.ui.screen.badgenotification
+import com.example.nitroapp.ui.components.SideDrawerMenu
 import com.orgs.myapplication.Model.User
 import com.orgs.myapplication.R
 import java.util.logging.Filter
@@ -81,29 +82,55 @@ private val DarkBlue = Color(0xFF0A1931)
 private val LightBlue = Color(0xFF185ADB)
 private val TextColor = Color.White
 private val SecondaryTextColor = Color.LightGray
-
 @Composable
 fun MainScreen() {
-    BackgroundPrincipal()
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.Transparent
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
+    var isDrawerOpen by remember {mutableStateOf(false)}
+
+    if (isDrawerOpen) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.5f))
+                .clickable { isDrawerOpen = false }
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+                .background(Color(0xFF001233))
         ) {
-            item { TopBarContent() }
-            item { MechanicTabs() }
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                MechanicSections()
+            SideDrawerMenu(
+                onItemClick = {
+                    isDrawerOpen = false
+                    // outras ações
+                },
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }else{
+        BackgroundPrincipal()
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = Color.Transparent
+        ) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                item {
+                    TopBarContent(clique = {isDrawerOpen = true})
+                }
+                item { MechanicTabs() }
+                item {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    MechanicSections()
+                }
             }
         }
     }
 }
 
 @Composable
-fun TopBarContent() {
+fun TopBarContent(clique : () -> Unit = {}) {
 
     Column {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
@@ -133,14 +160,16 @@ fun TopBarContent() {
                     "Olá Convidado!",
                     fontSize = 25.sp,
                     color = Color.White,
+                    fontFamily = FontFamily(Font(R.font.archivo_black)),
                     fontWeight = FontWeight(400),
                     modifier = Modifier.padding(start = 8.dp)
                 )
                 Text(
                     "faça sua jornada!",
-                    fontSize = 15.sp,
-                    color = Color(0xFF5D7FA5),
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.archivo_black)),
                     fontWeight = FontWeight(400),
+                    color = Color(0xFF5D7FA5),
                     modifier = Modifier.padding(start = 8.dp)
                 )
             }
@@ -152,6 +181,7 @@ fun TopBarContent() {
                     .padding(end = 23.dp)
                     .size(33.dp)
                     .clickable {
+                        clique()
                     }
             )
         }
@@ -161,6 +191,8 @@ fun TopBarContent() {
         TopNavigationBar()
     }
 }
+
+
 
 @Composable
 fun MechanicTabs() {
@@ -285,8 +317,8 @@ fun TopNavigationBar() {
             onValueChange = { searchText = it },
             modifier = Modifier
                 .weight(1f)
-                .height(55.dp)
-,            placeholder = {
+                .height(55.dp),
+            placeholder = {
                 Text(
                     "Buscar",
                     style = TextStyle(
