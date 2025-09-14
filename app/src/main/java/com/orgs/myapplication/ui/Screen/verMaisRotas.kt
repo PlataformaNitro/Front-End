@@ -83,7 +83,7 @@ private val LightBlue = Color(0xFF185ADB)
 private val TextColor = Color.White
 private val SecondaryTextColor = Color.LightGray
 @Composable
-fun MainScreen() {
+fun MainScreen(type: Int = 0) {
     var isDrawerOpen by remember {mutableStateOf(false)}
 
     if (isDrawerOpen) {
@@ -113,6 +113,7 @@ fun MainScreen() {
             modifier = Modifier.fillMaxSize(),
             color = Color.Transparent
         ) {
+            if(type == 0){
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -124,7 +125,45 @@ fun MainScreen() {
                     Spacer(modifier = Modifier.height(16.dp))
                     MechanicSections()
                 }
-            }
+            }} else if (type == 1) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    item {
+                        TopBarContent(clique = {isDrawerOpen = true})
+                    }
+                    item { MechanicTabs() }
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        MechanicSections()
+                    }
+                }
+            } else if (type == 2) {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        item {
+                            TopBarContent(clique = { isDrawerOpen = true })
+                        }
+                        item { MechanicTabs() }
+                        item {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            MechanicSections()
+                        }
+                    }
+            }else if (type == 3) {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        item {
+                            TopBarContent(clique = {isDrawerOpen = true})
+                        }
+                        item { MechanicTabs() }
+                        item {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            MechanicSections()
+                        }
+            }}
         }
     }
 }

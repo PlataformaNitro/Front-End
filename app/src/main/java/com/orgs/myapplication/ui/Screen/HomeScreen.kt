@@ -63,6 +63,7 @@ import com.orgs.myapplication.Model.User
 import com.orgs.myapplication.R
 import com.orgs.myapplication.ui.Activitys.RedirecionamentoActivity
 import com.orgs.myapplication.ui.Activitys.UsuarioActivity
+import com.orgs.myapplication.ui.Screen.navNitro
 import kotlinx.coroutines.delay
 import model.Viajem
 import kotlin.jvm.java
@@ -78,7 +79,8 @@ fun HomeScreen(viewModel: EventosScreenViewModel) {
 fun HomeScreen(
     modifier: Modifier = Modifier,
     state: EventoScreenUiState = EventoScreenUiState(),
-    listUsers: List<User> = sampleUsers
+    listUsers: List<User> = sampleUsers,
+    onVerMaisClick: () -> Unit = {},
 ) {
     val sections = state.sections
     var abaSelecionada by rememberSaveable { mutableStateOf(0) } // 0 = Eventos, 1 = Usuários, 2 = Clubes
@@ -288,13 +290,6 @@ fun HomeScreen(
                                         color = Color.White,
                                         fontSize = 15.sp
                                     )
-                                    Text(
-                                        "Ver Mais",
-                                        Modifier.padding(top = 10.dp, end = 16.dp).clickable {
-                                            context.startActivity(Intent(context, UsuarioActivity::class.java))
-                                        },
-                                        Color.White
-                                    )
                                 }
                                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                     items(listUsers) { user ->
@@ -305,17 +300,18 @@ fun HomeScreen(
                                 }
                             }
                             EventoSection(
-                                title = "Eventos",
+                                title = "Proximos Eventos",
                                 listaDeEventos = sampleEvents,
                                 modifier = Modifier.padding(top = 23.dp),
-                                onVerTodosClick = {
-                                    //todo
-                                }
+                                onVerTodosClick = onVerMaisClick
+
                             )
                             MecanicosSection(
                                 title = "Mecanicos",
                                 listaDeMecanicos = sampleMecanicos,
-                                modifier = Modifier.padding(top = 13.dp)
+                                modifier = Modifier.padding(top = 13.dp),
+                                onVerTodosClick = onVerMaisClick
+
                             )
                             SectionViajens(
                                 viajens = viajens,
@@ -328,12 +324,16 @@ fun HomeScreen(
                                         putExtra("descricao", viajem.descricao)
                                     }
                                     context.startActivity(intent)
-                                }
+                                },
+                                onVerMais = onVerMaisClick
+
                             )
                             MotoClubeSection(
                                 title = "MotoClubes",
                                 listaDeMotoCLubes = sampleMotoClubes,
-                                modifier = Modifier.padding(top = 13.dp)
+                                modifier = Modifier.padding(top = 13.dp) ,
+                                onVerTodosClick = onVerMaisClick
+
                             )
                             Text(
                                 "Quem Somos",

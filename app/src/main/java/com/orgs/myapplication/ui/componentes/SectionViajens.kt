@@ -1,3 +1,4 @@
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,7 +20,8 @@ fun SectionViajens(
     modifier: Modifier = Modifier,
     viajens: List<Viajem>,
     title: String,
-    onClickItem: (Viajem) -> Unit
+    onClickItem: (Viajem) -> Unit,
+    onVerMais: () -> Unit = {}
 ) {
     Column {
         Row(
@@ -27,7 +29,7 @@ fun SectionViajens(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(title, Modifier.padding(top = 10.dp, start = 16.dp), color = Color.White, fontSize = 15.sp)
-            Text("Ver Mais", Modifier.padding(top = 10.dp, end = 16.dp), Color.White)
+            Text("Ver Mais", Modifier.padding(top = 10.dp, end = 16.dp) .clickable{onVerMais()}, Color.White)
         }
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),

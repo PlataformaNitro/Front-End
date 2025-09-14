@@ -28,6 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.orgs.myapplication.ui.Screen.MainScreen
+import com.orgs.myapplication.ui.Screen.navNitro
 import com.orgs.myapplication.ui.theme.MyApplicationTheme
 import sampleSection
 import kotlin.jvm.java
@@ -38,22 +44,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            App(
-                onFabClickMap = {
-                startActivity(
-                    Intent(
-                        this,
-                        WarningActivity::class.java
-                    )
-                )
-            }, Content = {
-                val viewModel by viewModels<EventosScreenViewModel>()
-                HomeScreen(viewModel = viewModel)
-            },
-                onFabClickWarning = {
-                    startActivity(
-                        Intent(this, MapActivity::class.java))
-                    })
+            val navController = rememberNavController()
+            Scaffold {
+                innerPadding ->
+                NavHost(navController = navController, startDestination = navNitro.Home.name, modifier = Modifier.padding(innerPadding)){
+                    composable(route = navNitro.Home.name) {
+                        HomeScreen(onVerMaisClick = {navController.navigate(navNitro.Vermais.name) })
+                    }
+                    composable(route = navNitro.Vermais.name){
+                        MainScreen()
+                    }
+                }
+
+            }
         }
     }
 }
@@ -96,6 +99,8 @@ fun App(
         }
     }
 }
+
+
 
 
 
