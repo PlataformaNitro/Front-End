@@ -135,7 +135,7 @@ fun HomeScreen(
 
 
     Scaffold { paddingValues ->
-        Box(Modifier.padding(paddingValues)) {
+        Box(Modifier.fillMaxSize()) {
             if (isDrawerOpen) {
                 Box(
                     modifier = Modifier
@@ -160,7 +160,7 @@ fun HomeScreen(
             }
             if(!isDrawerOpen){
                 BackgroundPrincipal()
-                Column {
+                Column(Modifier.padding(paddingValues)) {
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                         NitroLogo(
                             modifier = Modifier

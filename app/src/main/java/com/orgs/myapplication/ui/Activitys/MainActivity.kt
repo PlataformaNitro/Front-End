@@ -45,16 +45,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            Scaffold {
-                innerPadding ->
-                NavHost(navController = navController, startDestination = navNitro.Home.name, modifier = Modifier.padding(innerPadding)){
+
+                NavHost(navController = navController, startDestination = navNitro.Home.name, modifier = Modifier){
                     composable(route = navNitro.Home.name) {
                         HomeScreen(onVerMaisClick = {navController.navigate(navNitro.Vermais.name) })
                     }
                     composable(route = navNitro.Vermais.name){
                         MainScreen()
                     }
-                }
+
 
             }
         }

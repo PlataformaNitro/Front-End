@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -20,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
@@ -37,6 +39,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -52,6 +55,7 @@ import com.example.arquivomobileoficialnitro.ui.screen.badgenotification
 import com.example.nitroapp.ui.components.SideDrawerMenu
 import com.orgs.myapplication.Model.User
 import com.orgs.myapplication.R
+import model.Viajem
 import java.util.logging.Filter
 
 // Supondo que você tenha esses recursos de imagem em sua pasta res/drawable
@@ -76,12 +80,26 @@ val garageMechanics = listOf(
 
 )
 
+val viajens = listOf(
+    Viajem(R.drawable.viajem_1, "Lapa", "Rota passando pela Marginal e vista do Rio Pinheiros", "Ibirapuera"),
+    Viajem(R.drawable.viajem_2, "Mooca", "Passeio pela Av. Paes de Barros até o parque mais famoso da cidade", "Ibirapuera"),
+    Viajem(R.drawable.viajem_3, "Santana", "Viagem passando pelo centro e região da Luz", "Vila Mariana"),
+    Viajem(R.drawable.viajem_4, "Tatuapé", "Rota por avenidas amplas até a região arborizada da zona sul", "Santo Amaro"),
+    Viajem(R.drawable.viajem_5, "Pinheiros", "Passeio moderno por avenidas como Faria Lima e Juscelino Kubitschek", "Brooklin"),
+    Viajem(R.drawable.viajem_6, "Butantã", "Caminho passando pela USP e chegando em área comercial e residencial", "Morumbi"),
+    Viajem(R.drawable.viajem_9, "Liberdade", "Rota cultural passando pelo centro antigo e museus", "Aclimação"),
+    Viajem(R.drawable.viajem_8, "Perdizes", "Subidas e descidas até a arborizada zona norte", "Tremembé"),
+    Viajem(R.drawable.viajem_1, "São Miguel Paulista", "Viagem longa pela zona leste até bairro nobre e gastronômico", "Vila Madalena"),
+    Viajem(R.drawable.viajem_10, "Capão Redondo", "Rota movimentada com trechos da Estrada de Itapecerica", "Ipiranga")
+)
+
 
 // Definição de Cores para o tema do App
 private val DarkBlue = Color(0xFF0A1931)
 private val LightBlue = Color(0xFF185ADB)
 private val TextColor = Color.White
 private val SecondaryTextColor = Color.LightGray
+
 @Composable
 fun MainScreen(type: Int = 0) {
     var isDrawerOpen by remember {mutableStateOf(false)}
@@ -108,75 +126,59 @@ fun MainScreen(type: Int = 0) {
             )
         }
     }else{
-        BackgroundPrincipal()
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()   ,
             color = Color.Transparent
         ) {
-            if(type == 0){
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                item {
-                    TopBarContent(clique = {isDrawerOpen = true})
-                }
-                item { MechanicTabs() }
-                item {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    MechanicSections()
-                }
-            }} else if (type == 1) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    item {
-                        TopBarContent(clique = {isDrawerOpen = true})
-                    }
-                    item { MechanicTabs() }
-                    item {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        MechanicSections()
-                    }
-                }
-            } else if (type == 2) {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        item {
-                            TopBarContent(clique = { isDrawerOpen = true })
-                        }
-                        item { MechanicTabs() }
-                        item {
-                            Spacer(modifier = Modifier.height(16.dp))
-                            MechanicSections()
-                        }
-                    }
-            }else if (type == 3) {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        item {
-                            TopBarContent(clique = {isDrawerOpen = true})
-                        }
-                        item { MechanicTabs() }
-                        item {
-                            Spacer(modifier = Modifier.height(16.dp))
-                            MechanicSections()
-                        }
-            }}
+    BackgroundPrincipal()
+Column {
+    TopBarContent(clique = { isDrawerOpen = true })
+    MechanicTabs()
+    if (type == 0) {
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState()) // Apply verticalScroll first
+                .fillMaxSize() // Ensure the Column takes up available space for the gradient
+        ) {
+            Spacer(modifier = Modifier.height(16.dp))
+            MechanicSections()
         }
+    }else if(type == 1){
+
+    }else if(type == 2){
+        
+    }else if(type == 3){
+
+    }
+
     }
 }
+        }
+    }
+
 
 @Composable
 fun TopBarContent(clique : () -> Unit = {}) {
+    Box(){
+        Image(
+            painter = painterResource(R.drawable.topbar),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp),
+            contentScale = ContentScale.FillBounds
+
+        )
 
     Column {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            NitroLogo(
+            Image(
+                painterResource(R.drawable.nitro_logo_svg),
                 modifier = Modifier
                     .size(91.dp)
-                    .padding(end = 23.dp),
+                    .padding(end = 30.dp, top = 10.dp)
+                    .alpha(0.0f),
+                contentDescription = "Descrição da imagem"
             )
         }
 
@@ -229,6 +231,7 @@ fun TopBarContent(clique : () -> Unit = {}) {
         // --- Barra de Busca ---
         TopNavigationBar()
     }
+    }
 }
 
 
@@ -237,12 +240,16 @@ fun TopBarContent(clique : () -> Unit = {}) {
 fun MechanicTabs() {
     var selectedTabIndex by remember { mutableStateOf(0) }
     val tabs = listOf("Recentes", "Populares", "Para Você", "Relevantes")
+
+
     Spacer(Modifier
         .alpha(0.5f)
         .shadow(elevation = 10.dp)
         .width(418.dp)
         .height(3.dp)
         .background(color = Color(0xFF091D3A)))
+    Spacer(modifier = Modifier.height(10.dp))
+
     Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         Spacer(Modifier.width(10.dp))
@@ -251,18 +258,30 @@ fun MechanicTabs() {
         FilterChip("Para Você")
         FilterChip("Relevantes")
     }
+    Spacer(modifier = Modifier.height(10.dp))
+
+    Spacer(Modifier
+        .alpha(0.5f)
+        .shadow(elevation = 10.dp)
+        .width(418.dp)
+        .height(3.dp)
+        .background(color = Color(0xFF091D3A)))
+
 }
 
 @Composable
 fun MechanicSections() {
-    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-        Section(title = "Mecânicos Sugeridos", items = suggestedMechanics)
-        Spacer(modifier = Modifier.height(16.dp))
-        Section(title = "Mecânicos Rápidos", items = fastMechanics)
-        Spacer(modifier = Modifier.height(16.dp))
-        Section(title = "Mecânicos com guincho", items = winchMechanics)
-        Spacer(modifier = Modifier.height(16.dp))
-        Section(title = "Garagens Mecânicas", items = garageMechanics)
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
+    ) {
+        Section(title = "Mecânicos Próximos", items = suggestedMechanics)
+        Section(title = "Mecânicos 24h", items = fastMechanics)
+        Section(title = "Mecânicos Guincho", items = winchMechanics)
+        Section(title = "Oficinas", items = garageMechanics)
+        Spacer(modifier = Modifier.height(30.dp))
     }
 }
 
@@ -337,15 +356,23 @@ fun TopNavigationBar() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         // Botão de retorno
-        IconButton(
-            onClick = { /* Ação de retorno */ },
-            modifier = Modifier.align(Alignment.CenterVertically)
+        Box(
+            modifier = Modifier
+                .size(48.dp)
+                .border(width = 1.dp, color = Color(0xFF34353B), shape = CircleShape) // cor da borda
+                .background(Color(0xFF1B212A), CircleShape)
         ) {
-            Image(
-                painter =  painterResource(R.drawable.voltar_padrao),
-                contentDescription = "Voltar",
-                modifier = Modifier.size(42.dp).align(Alignment.CenterVertically),
-            )
+            IconButton(
+                onClick = { /* ação */ },
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.icon_voltar),
+                    contentDescription = "Notificações",
+                    tint = iconColor,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -356,18 +383,25 @@ fun TopNavigationBar() {
             onValueChange = { searchText = it },
             modifier = Modifier
                 .weight(1f)
-                .height(55.dp),
+                .height(50.dp),
             placeholder = {
                 Text(
                     "Buscar",
                     style = TextStyle(
-                        fontSize = 18.sp,
+                        fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.inter)),
-                        fontWeight = FontWeight(700),
-                        color = Color(0xFF49515D)
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF49515D),
                     )
                 )
             },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color(0xFF1B222A),      // cor da borda quando focado
+                unfocusedBorderColor = Color(0xFF323335),
+                focusedContainerColor = Color(0xFF1B222E),
+                unfocusedContainerColor = Color(0xFF1B222E)
+// cor da borda quando não está focado
+            ),
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
@@ -378,54 +412,62 @@ fun TopNavigationBar() {
             },
             trailingIcon = {
                 Row {
-                    Image(
-                        painter = painterResource(id = R.drawable.microphone),
+                    Icon(
+                        painter = painterResource(id = R.drawable.icone_mic),
                         contentDescription = "Microfone",
-                        modifier = Modifier.clickable { /* Ação do microfone */ }
+                        modifier = Modifier
+                            .clickable { /* Ação do microfone */ }
+                            .size(26.dp),
+                        tint = iconColor
                     )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Image(
-                        painter = painterResource(id = R.drawable.camera),
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Icon(
+                        painter = painterResource(id = R.drawable.icone_camera),
                         contentDescription = "Câmera",
-                        modifier = Modifier.clickable { /* Ação da câmera */ }
+                        modifier = Modifier
+                            .clickable { /* Ação da câmera */ }
+                            .size(26.dp),
+                        tint = iconColor
+
                     )
+                    Spacer(modifier = Modifier.width(15.dp))
+
                 }
             },
             shape = RoundedCornerShape(24.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = Color(0xFF1C232D),
-                focusedContainerColor = Color(0xFF1C232D),
-                unfocusedBorderColor = Color.Transparent,
-                focusedBorderColor = Color.Transparent,
-                unfocusedTextColor = Color.White,
-                focusedTextColor = Color.White
-            ),
             singleLine = true
         )
 
         Spacer(modifier = Modifier.width(8.dp))
 
         // Ícone de Notificações
-        IconButton(
-            onClick = { /* Ação de notificações */ },
+        Box(
             modifier = Modifier
                 .size(48.dp)
-                .background(Color(0xFF1B222E), CircleShape)
+                .border(width = 1.dp, color = Color(0xFF34353B), shape = CircleShape) // cor da borda
+                .background(Color(0xFF1B212A), CircleShape)
         ) {
-            Icon(
-                imageVector = Icons.Default.Notifications,
-                contentDescription = "Notificações",
-                tint = iconColor
-            )
+            IconButton(
+                onClick = { /* ação */ },
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = "Notificações",
+                    tint = Color.White
+                )
+            }
         }
 
         Spacer(modifier = Modifier.width(8.dp))
 
         // Ícone de Mensagens com contador
+        Box{
         Box(
             modifier = Modifier
                 .size(48.dp)
-                .background(Color(0xFF1B222E), CircleShape),
+                .background(Color(0xFF1B222E), CircleShape)
+                .border(width = 1.dp, color = Color(0xFF34353B), shape = CircleShape),
             contentAlignment = Alignment.Center
         ) {
             IconButton(
@@ -439,6 +481,8 @@ fun TopNavigationBar() {
                 )
             }
             // Contador de mensagens
+
+        }
             badgenotification(Modifier .align(Alignment.BottomEnd))
 
         }
@@ -479,5 +523,5 @@ fun FilterChip(text: String) {
 @Composable
 private fun PreviewBotaoFiltro()
 {
-    FilterChip("iu")
+    FilterChip("ui")
 }
