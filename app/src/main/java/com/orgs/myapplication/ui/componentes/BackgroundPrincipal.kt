@@ -11,7 +11,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.orgs.myapplication.R
-val gradiente = Brush.linearGradient(
+val gradiente = Brush.verticalGradient(
     colorStops = arrayOf(
         0.0f to Color(0xFF021030),
         0.3f to Color(0xFF021030),

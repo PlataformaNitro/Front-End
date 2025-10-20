@@ -3,41 +3,28 @@ package com.orgs.myapplication.ui.Screen
 import BackgroundPrincipal
 import ImagemPerfil
 import androidx.compose.foundation.rememberScrollState
-import NitroLogo
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.*
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -56,7 +43,6 @@ import com.example.nitroapp.ui.components.SideDrawerMenu
 import com.orgs.myapplication.Model.User
 import com.orgs.myapplication.R
 import model.Viajem
-import java.util.logging.Filter
 
 // Supondo que você tenha esses recursos de imagem em sua pasta res/drawable
 // Como não tenho os assets originais, estou usando placeholders.
@@ -156,7 +142,212 @@ Column {
         }
     }
 
+@Composable
+fun ViajensCards(modifier: Modifier = Modifier) {
+    Box(
+        modifier = Modifier
+            .width(180.dp)
+            .height(230.dp)
+            .clip(RoundedCornerShape(10.dp)),
+        contentAlignment = Alignment.Center
+    ) {
 
+        Image(
+            painter = painterResource(id = R.drawable.viajem_1),
+            contentDescription = null, // Descrição viria de um modelo de dados
+            modifier = Modifier
+                .fillMaxSize(),
+            contentScale = ContentScale.FillBounds
+        )
+        Box(Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    colorStops = arrayOf(
+                        0.0f to Color.Transparent,
+                        0.55f to Color.Transparent,
+                        1.0f to Color.Black
+                    )
+                )
+            )){}
+        Text(
+            text = "Tito → Parque Ibirapuera",
+            style = TextStyle(
+                fontSize = 10.sp,
+                fontFamily = FontFamily(Font(R.font.archivo)),
+                fontWeight = FontWeight(700),
+                color = Color(0xFFFFFFFF),
+            ),
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(8.dp)
+        )
+    }
+
+}
+
+@Preview
+@Composable
+private fun ViajemCardsPreview() {
+    ViajensCards()
+}
+
+@Composable
+fun LugarCards(modifier: Modifier = Modifier) {
+    Box(
+        modifier = Modifier
+            .width(201.dp)
+            .height(259.dp)
+            .clip(RoundedCornerShape(20.dp))
+            .background(
+                Brush.verticalGradient(
+                    colorStops = arrayOf(
+                        0.0f to Color(0xFF014677),
+                        0.65f to Color(0xFF010C24)
+                    )
+                )
+            ), // Cor de fundo para os cards
+        contentAlignment = Alignment.Center
+    ) {
+
+        Image(
+            painter = painterResource(id = R.drawable.viajem_1),
+            contentDescription = null, // Descrição viria de um modelo de dados
+            modifier = Modifier
+                .padding(bottom = 24.dp)
+                .width(154.dp)
+                .height(201.dp)
+                .clip(CircleShape)
+                .align(Alignment.Center)
+                ,
+            contentScale = ContentScale.FillBounds
+        )
+Column(     modifier = Modifier
+    .align(Alignment.BottomStart)
+    .padding(start = 16.dp, bottom = 8.dp)){
+        Text(
+            text = "Bar Cacilda - Lapa Tito",
+            style = TextStyle(
+                fontSize = 10.sp,
+                fontFamily = FontFamily(Font(R.font.archivo)),
+                fontWeight = FontWeight(700),
+                color = Color(0xFFFFFFFF),
+            ),
+            textAlign = TextAlign.Left,
+
+        )
+    Spacer(modifier = Modifier.height(4.dp))
+    Text(
+        text = "#Bar #Restaurante",
+        style = TextStyle(
+            fontSize = 10.sp,
+            fontFamily = FontFamily(Font(R.font.archivo)),
+            fontWeight = FontWeight(700),
+            color = Color(0xFFFFFFFF),
+        ),
+        textAlign = TextAlign.Left,
+    )
+}
+    }
+
+
+    }
+
+
+
+@Preview
+@Composable
+private fun PreviewLugarCards() {
+    LugarCards()
+    
+}
+
+@Composable
+fun MecanicoCard(modifier: Modifier = Modifier) {
+    Box(
+        modifier = Modifier
+            .width(180.dp)
+            .height(230.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(Color.DarkGray), // Cor de fundo para os cards
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.moto_tool_1),
+            contentDescription = null, // Descrição viria de um modelo de dados
+            modifier = Modifier
+                .fillMaxSize(),
+            contentScale = ContentScale.FillBounds
+        )
+        Box(Modifier.width(180.dp)
+            .height(59.dp)
+            .align(Alignment.BottomCenter)) {
+            Box(Modifier
+                .fillMaxSize()
+                .alpha(0.4f)
+                .background(
+                    Brush.linearGradient(
+                        colorStops = arrayOf(
+                            0.0f to Color(0xFF021030),
+                            0.4f to Color(0xFF021030),
+                            0.55f to Color(0xFF014677)
+                        )
+                    )
+
+                )){}
+            Box(Modifier.fillMaxSize() .alpha(0.2f) .background(Color.Black)){}
+            Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "Industry Automotive",
+                    style = TextStyle(
+                        fontSize = 15.sp,
+                        fontFamily = FontFamily(Font(R.font.archivo_black)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFFFFFFFF),
+                    )
+                )
+                Text(
+                    text = "oficina especializada - 3km",
+                    style = TextStyle(
+                        fontSize = 10.sp,
+                        fontFamily = FontFamily(Font(R.font.archivo)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFFFFFFFF),
+                    )
+                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "4.9 ★ | 139 ",
+                        style = TextStyle(
+                            fontSize = 10.sp,
+                            fontFamily = FontFamily(Font(R.font.archivo)),
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFFFFFFFF),
+                        )
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.emoji_moto_png),
+                        contentDescription = "Moto",
+                        modifier = Modifier.size(14.dp),
+                        tint = Color.White
+                    )
+                }
+
+
+            }
+        }
+    }
+
+}
+
+@Preview
+@Composable
+private fun PreviewMecanicoCard() {
+    MecanicoCard()
+}
 @Composable
 fun TopBarContent(clique : () -> Unit = {}) {
     Box(){
