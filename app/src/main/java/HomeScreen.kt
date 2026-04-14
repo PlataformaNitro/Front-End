@@ -40,6 +40,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -83,7 +84,7 @@ fun HomeScreen(
     onVerMaisClick: () -> Unit = {},
 ) {
     val sections = state.sections
-    var abaSelecionada by rememberSaveable { mutableStateOf(0) } // 0 = Eventos, 1 = Usuários, 2 = Clubes
+    var abaSelecionada by rememberSaveable { mutableIntStateOf(0) } // 0 = Eventos, 1 = Usuários, 2 = Clubes
     var text = state.searchText
     val eventosProucurados = state.eventosProucurados
     val usuariosProucurados = state.usuariosProucurados

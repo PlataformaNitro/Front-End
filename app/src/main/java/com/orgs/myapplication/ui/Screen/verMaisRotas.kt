@@ -120,22 +120,21 @@ fun MainScreen(type: Int = 0) {
 Column {
     TopBarContent(clique = { isDrawerOpen = true })
     MechanicTabs()
-    if (type == 0) {
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState()) // Apply verticalScroll first
                 .fillMaxSize() // Ensure the Column takes up available space for the gradient
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            MechanicSections()
+            if(type == 0)
+                MechanicSections();
+            else if(type == 1)
+                ViagensSections();
+            else if(type == 2)
+                LugaresSections();
+            else if(type == 3)
+                MotoClubesSections();
         }
-    }else if(type == 1){
-
-    }else if(type == 2){
-        
-    }else if(type == 3){
-
-    }
 
     }
 }
@@ -143,7 +142,7 @@ Column {
     }
 
 @Composable
-fun ViajensCards(modifier: Modifier = Modifier) {
+fun ViajensCards(modifier: Modifier = Modifier, drawableId: Int = R.drawable.viajem_1) {
     Box(
         modifier = Modifier
             .width(180.dp)
@@ -153,7 +152,7 @@ fun ViajensCards(modifier: Modifier = Modifier) {
     ) {
 
         Image(
-            painter = painterResource(id = R.drawable.viajem_1),
+            painter = painterResource(id = drawableId),
             contentDescription = null, // Descrição viria de um modelo de dados
             modifier = Modifier
                 .fillMaxSize(),
@@ -186,14 +185,71 @@ fun ViajensCards(modifier: Modifier = Modifier) {
 
 }
 
+@Composable
+fun MotoClubeCards(modifier: Modifier = Modifier, drawableId: Int = R.drawable.viajem_1) {
+    Box(
+        modifier = Modifier
+            .width(180.dp)
+            .height(230.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(
+                Brush.verticalGradient(
+                    colorStops = arrayOf(
+                        0.9f to Color(0xFF010C2),
+                        1f to Color(0xFF014677)
+                    )
+                )
+            )
+    )
+    {}
+    Box(
+        modifier = Modifier
+            .width(180.dp)
+            .height(230.dp)
+            .clip(RoundedCornerShape(10.dp)),
+        contentAlignment = Alignment.Center
+    ) {
+
+        Box(modifier = Modifier .height(205.dp) .fillMaxWidth() .align(Alignment.TopCenter)
+            .clip(RoundedCornerShape(10.dp) ),
+        )
+        {
+            Image(
+                painter = painterResource(id = drawableId),
+                contentDescription = null, // Descrição viria de um modelo de dados
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
+        }
+        Text(
+            text = "Tito → Parque Ibirapuera",
+            style = TextStyle(
+                fontSize = 10.sp,
+                fontFamily = FontFamily(Font(R.font.archivo)),
+                fontWeight = FontWeight(700),
+                color = Color(0xFFFFFFFF),
+            ),
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(8.dp)
+        )
+    }
+
+}
+
 @Preview
 @Composable
 private fun ViajemCardsPreview() {
     ViajensCards()
 }
-
+@Preview
 @Composable
-fun LugarCards(modifier: Modifier = Modifier) {
+private fun MotoClubeCardsPreview() {
+    MotoClubeCards()
+}
+@Composable
+fun LugarCards(modifier: Modifier = Modifier, drawableId: Int = R.drawable.viajem_1) {
     Box(
         modifier = Modifier
             .width(201.dp)
@@ -202,8 +258,8 @@ fun LugarCards(modifier: Modifier = Modifier) {
             .background(
                 Brush.verticalGradient(
                     colorStops = arrayOf(
-                        0.0f to Color(0xFF014677),
-                        0.65f to Color(0xFF010C24)
+                        0f to Color(0xFF010C24),
+                        0.65f to Color(0xFF014677)
                     )
                 )
             ), // Cor de fundo para os cards
@@ -211,7 +267,7 @@ fun LugarCards(modifier: Modifier = Modifier) {
     ) {
 
         Image(
-            painter = painterResource(id = R.drawable.viajem_1),
+            painter = painterResource(id = drawableId),
             contentDescription = null, // Descrição viria de um modelo de dados
             modifier = Modifier
                 .padding(bottom = 24.dp)
@@ -263,7 +319,7 @@ private fun PreviewLugarCards() {
 }
 
 @Composable
-fun MecanicoCard(modifier: Modifier = Modifier) {
+fun MecanicoCard(modifier: Modifier = Modifier, drawableId: Int = R.drawable.viajem_1) {
     Box(
         modifier = Modifier
             .width(180.dp)
@@ -273,7 +329,7 @@ fun MecanicoCard(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.moto_tool_1),
+            painter = painterResource(id = drawableId),
             contentDescription = null, // Descrição viria de um modelo de dados
             modifier = Modifier
                 .fillMaxSize(),
@@ -436,7 +492,7 @@ fun MechanicTabs() {
     Spacer(Modifier
         .alpha(0.5f)
         .shadow(elevation = 10.dp)
-        .width(418.dp)
+        .fillMaxWidth()
         .height(3.dp)
         .background(color = Color(0xFF091D3A)))
     Spacer(modifier = Modifier.height(10.dp))
@@ -454,7 +510,7 @@ fun MechanicTabs() {
     Spacer(Modifier
         .alpha(0.5f)
         .shadow(elevation = 10.dp)
-        .width(418.dp)
+        .fillMaxWidth()
         .height(3.dp)
         .background(color = Color(0xFF091D3A)))
 
@@ -465,22 +521,70 @@ fun MechanicSections() {
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Section(title = "Mecânicos Próximos", items = suggestedMechanics)
-        Section(title = "Mecânicos 24h", items = fastMechanics)
-        Section(title = "Mecânicos Guincho", items = winchMechanics)
-        Section(title = "Oficinas", items = garageMechanics)
+        Section(title = "Mecânicos Próximos", items = suggestedMechanics, card = 0)
+        Section(title = "Mecânicos 24h", items = fastMechanics, card = 0)
+        Section(title = "Mecânicos Guincho", items = winchMechanics, card = 0)
+        Section(title = "Oficinas", items = garageMechanics, card = 0)
+        Spacer(modifier = Modifier.height(30.dp))
+    }
+}
+@Composable
+fun ViagensSections() {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
+    ) {
+        Section(title = "Viagens Próximos", items = suggestedMechanics, card = 1)
+        Section(title = "Viagnes Relevantes", items = fastMechanics, card = 1)
+        Section(title = "Viagens Populares", items = winchMechanics, card = 1)
+        Section(title = "Viagens exoticas", items = garageMechanics, card = 1)
         Spacer(modifier = Modifier.height(30.dp))
     }
 }
 
 @Composable
-fun Section(title: String, items: List<Int>) {
+fun LugaresSections() {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
+    ) {
+        Section(title = "Lugares Próximos", items = suggestedMechanics, card = 2)
+        Section(title = "Restaurantes", items = fastMechanics, card = 2)
+        Section(title = "Paisagens", items = winchMechanics, card = 2)
+        Section(title = "Parques", items = garageMechanics, card = 2)
+        Spacer(modifier = Modifier.height(30.dp))
+    }
+}
+@Composable
+fun MotoClubesSections() {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
+    ) {
+        Section(title = "Lugares Próximos", items = suggestedMechanics, card = 2)
+        Section(title = "Restaurantes", items = fastMechanics, card = 2)
+        Section(title = "Paisagens", items = winchMechanics, card = 2)
+        Section(title = "Parques", items = garageMechanics, card = 2)
+        Spacer(modifier = Modifier.height(30.dp))
+    }
+}
+
+@Composable
+fun Section(title: String, items: List<Int>, card: Int = 0) {
+
     Column(Modifier.fillMaxWidth()) {
         Text(
             text = title,
+            modifier = Modifier.padding(horizontal = 16.dp),
             style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily(Font(R.font.archivo_black)),
@@ -493,12 +597,20 @@ fun Section(title: String, items: List<Int>) {
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(start = 4.dp),// A rolagem principal é da LazyColumn
+            contentPadding = PaddingValues(horizontal = 16.dp),
 
             userScrollEnabled = true,
         ) {
             items(items) { drawableId ->
-                MechanicCard(drawableId = drawableId)
+                if (card == 0) {
+                    MecanicoCard(drawableId = drawableId)
+                } else if (card == 1) {
+                    ViajensCards(drawableId = drawableId)
+                } else if (card == 2) {
+                    LugarCards(drawableId = drawableId)
+                } else if (card == 3) {
+                    MotoClubeCards(drawableId = drawableId)
+                }
             }
         }
     }
